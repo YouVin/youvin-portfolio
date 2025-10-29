@@ -1,20 +1,32 @@
 // lib/projects.ts
 
 export type Project = {
-  slug: string; // URL용. 예: "dotori-island"
-  title: string; // 화면에 보여줄 이름
-  period: string; // 작업 기간. 예: "2025.06 - 2025.07"
-  stack: string[]; // 사용 기술들
-  summary: string; // 프로젝트 카드에서 한 줄로 보여줄 요약
-  description: string[]; // 상세 페이지에서 여러 문단으로 보여줄 본문
-  role: string[]; // 내가 한 일 bullet 포인트
-  github: string; // 깃허브 repo URL
-  demo?: string; // 데모 URL 있으면 넣기 (없으면 안 넣어도 됨)
-  thumbnail?: string; // 나중에 썸네일 이미지 경로 (public/images/...)
+  slug: string;
+  title: string;
+  period: string;
+  stack: string[];
+  summary: string;
+  description?: string[]; // ← optional
+  role?: string[]; // ← optional
+  github: string;
+  demo?: string;
+  thumbnail?: string;
+  heroImage?: string;
+  previewImages?: {
+    src: string;
+    caption?: string;
+  }[];
+  techSections?: TechSection[];
 };
 
-// 임시 데이터 (초안)
-// TODO: 유빈 실제 내용으로 나중에 세부 튜닝
+// 새 타입
+export type TechSection = {
+  title: string;
+  body: string;
+  // "single-vertical" | "single-horizontal" | "multi-vertical"
+  layout: "single-vertical" | "single-horizontal" | "multi-vertical";
+  images: string[]; // 한 장만 필요해도 배열로
+};
 
 export const projects: Project[] = [
   {
@@ -95,22 +107,58 @@ export const projects: Project[] = [
     thumbnail: "/images/greeni.png",
   },
   {
-    slug: "flutter-app",
-    title: "Flutter 앱 프로토타입",
-    period: "2025.02",
-    stack: ["Flutter", "Dart"],
+    slug: "today-keyword",
+    title: "TodayKeyword",
+    period: "2022.07 - 2022.11",
+    stack: [
+      "Flutter",
+      "Dart",
+      "GetX",
+      "Firebase Auth",
+      "Kakao Login",
+      "Google Sign-In",
+      "SlidingUpPanel",
+    ],
     summary:
-      "Flutter 위젯 트리 기반으로 화면과 라우팅을 설계한 모바일 앱 프로토타입.",
-    description: [
-      "Flutter로 모바일 앱의 초기 구조(화면 전환, 위젯 단위 컴포넌트화, 상태 흐름)를 설계했습니다.",
+      "위치 기반 로컬 추천 커뮤니티 앱. 주변 장소 리뷰, 사진, 키워드 태그, 지도 기반 추천까지 한 화면에서 볼 수 있는 모바일 MVP.",
+    github: "https://github.com/YouVin/TodayKeyword.FrontEnd",
+    heroImage: "/images/todaykeyword-hero.jpg",
+
+    previewImages: [
+      {
+        src: "/images/todaykeyword-hero.jpg",
+      },
+      {
+        src: "/images/todaykeyword-screens.jpg",
+      },
     ],
-    role: [
-      "페이지 라우팅 구성",
-      "재사용 가능한 위젯 컴포넌트화",
-      "UI 구조 확장성 고려",
+
+    techSections: [
+      {
+        title: "상태 관리 (GetX) & 위젯 구조",
+        body: "피드, 댓글, parentComment 상태 등을 GetX 컨트롤러에 분리해 관리했습니다. 위젯은 최대한 dumb하게 유지해 재렌더를 줄였고, 댓글/대댓글 흐름, 좋아요/북마크 상태 같은 인터랙션 로직을 명확하게 추적할 수 있도록 했습니다.",
+        layout: "single-vertical",
+        images: ["/images/Community(1).png"],
+      },
+      {
+        title: "SlidingUpPanel 온보딩 플로우",
+        body: "로그인 화면을 단순 버튼 나열이 아니라 ‘온보딩 랜딩’처럼 설계했습니다. 화면 하단에서 회원가입 패널이 올라오고, 닉네임/소속/프로필 이미지를 입력하도록 했습니다. 사용자는 앱을 떠나지 않고 가입을 끝낼 수 있어 이탈이 줄어듭니다.",
+        layout: "multi-vertical",
+        images: ["/images/LoginFragmnet.png"],
+      },
+      {
+        title: "소셜 로그인 & Firebase Auth 연동",
+        body: "Kakao / Google / Apple 로그인 버튼을 Flutter에서 커스텀 UI로 만들고, FirebaseAuthService(GetX)를 통해 실제 인증 액션을 트리거하게 했습니다. 이 구조로 추후 백엔드 없이도 MVP 단계 사용자 테스트가 가능했습니다.",
+        layout: "single-vertical",
+        images: ["/images/LoginFragment(1).png"],
+      },
+      {
+        title: "지도 기반 추천 & 매장 상세 정보",
+        body: "지도를 중심으로 주변 가게를 탐색하고, 가게 카드에서 평점, 영업시간, 위치, 인기 키워드 해시태그, 리뷰까지 한 번에 볼 수 있게 했습니다. 단순 지도 마커가 아니라 ‘바로 결정할 수 있는 정보 카드’를 설계한 게 핵심입니다.",
+        layout: "single-vertical",
+        images: ["/images/MapFragment(3).png"],
+      },
     ],
-    github: "https://github.com/YouVin",
-    thumbnail: "/images/flutter.png",
   },
 ];
 

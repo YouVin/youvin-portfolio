@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <section className="space-y-8">
@@ -19,24 +21,24 @@ export default function HomePage() {
 
       {/* quick links */}
       <div className="flex flex-wrap gap-3 text-sm">
-        <a
+        <Link
           href="/projects"
           className="rounded-lg border border-neutral-300 bg-white px-3 py-2 font-medium text-neutral-800 shadow-sm hover:bg-neutral-100"
         >
           내 프로젝트 보러가기 →
-        </a>
-        <a
+        </Link>
+        <Link
           href="/about"
           className="rounded-lg border border-neutral-200 px-3 py-2 font-medium text-neutral-700 hover:bg-neutral-50"
         >
           나에 대해 더 보기
-        </a>
-        <a
+        </Link>
+        <Link
           href="mailto:you@example.com"
           className="rounded-lg border border-neutral-900 bg-neutral-900 px-3 py-2 font-medium text-white hover:bg-neutral-800"
         >
           연락하기
-        </a>
+        </Link>
       </div>
     </section>
   );
