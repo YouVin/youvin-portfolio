@@ -135,34 +135,52 @@ export const projects: Project[] = [
 
     techSections: [
       {
+        title: "검색(Search) 기능 UI",
+        body:
+          "Flutter와 GetX로 지도 검색 기능을 개발했습니다.\n" +
+          "검색창에 디바운싱을 적용해 불필요한 API 호출을 줄이고, " +
+          "상태 관리를 통해 로딩·결과·에러를 일관되게 제어했습니다.\n" +
+          "WebView를 활용해 지도 마커 데이터를 동기화하고, " +
+          "필터 선택, 위치 기반 탐색, 신규 마커 등록까지 지원하여 " +
+          "사용자가 직관적으로 검색할 수 있는 UX를 완성했습니다.",
+        layout: "multi-vertical",
+        images: [
+          "/images/search-1.png",
+          "/images/search-2.png",
+          "/images/search-3.png",
+        ],
+      },
+      {
         title: "상태 관리 (GetX) & 위젯 구조",
-        body: "피드, 댓글, parentComment 상태 등을 GetX 컨트롤러에 분리해 관리했습니다. 위젯은 최대한 dumb하게 유지해 재렌더를 줄였고, 댓글/대댓글 흐름, 좋아요/북마크 상태 같은 인터랙션 로직을 명확하게 추적할 수 있도록 했습니다.",
+        body:
+          "피드·댓글·대댓글·좋아요 상태를 GetX 컨트롤러로 분리했습니다.\n" +
+          "UI는 Dumb 위젯으로 구성해 로직을 완전히 분리하고,\n 불필요한 렌더링을 최소화했습니다.\n" +
+          "상태 흐름을 명확히 추적할 수 있도록 구조를 단순화했습니다.",
         layout: "single-vertical",
         images: ["/images/Community(1).png"],
       },
       {
         title: "SlidingUpPanel 온보딩 플로우",
-        body: "로그인 화면을 단순 버튼 나열이 아니라 ‘온보딩 랜딩’처럼 설계했습니다. 화면 하단에서 회원가입 패널이 올라오고, 닉네임/소속/프로필 이미지를 입력하도록 했습니다. 사용자는 앱을 떠나지 않고 가입을 끝낼 수 있어 이탈이 줄어듭니다.",
-        layout: "multi-vertical",
+        body:
+          "로그인 화면을 온보딩 경험 중심으로 재설계했습니다.\n" +
+          "SlidingUpPanel로 회원가입 패널이 나오도록 구현했습니다.\n" +
+          "닉네임·소속·프로필 입력을 한 화면에서 처리해 이탈률을 줄였습니다.",
+        layout: "single-vertical",
         images: ["/images/LoginFragmnet.png"],
       },
       {
         title: "소셜 로그인 & Firebase Auth 연동",
-        body: "Kakao / Google / Apple 로그인 버튼을 Flutter에서 커스텀 UI로 만들고, FirebaseAuthService(GetX)를 통해 실제 인증 액션을 트리거하게 했습니다. 이 구조로 추후 백엔드 없이도 MVP 단계 사용자 테스트가 가능했습니다.",
+        body:
+          "Kakao, Google, Apple 로그인 UI를 커스터마이징했습니다.\n" +
+          "FirebaseAuthService(GetX)로 인증 로직을 모듈화하고,\n 모든 채널의 흐름을 통합했습니다.\n" +
+          "백엔드 연동 시 수정만으로 확장 가능한 구조를 설계했습니다.",
         layout: "single-vertical",
         images: ["/images/LoginFragment(1).png"],
-      },
-      {
-        title: "지도 기반 추천 & 매장 상세 정보",
-        body: "지도를 중심으로 주변 가게를 탐색하고, 가게 카드에서 평점, 영업시간, 위치, 인기 키워드 해시태그, 리뷰까지 한 번에 볼 수 있게 했습니다. 단순 지도 마커가 아니라 ‘바로 결정할 수 있는 정보 카드’를 설계한 게 핵심입니다.",
-        layout: "single-vertical",
-        images: ["/images/MapFragment(3).png"],
       },
     ],
   },
 ];
 
-// 특정 slug로 프로젝트 찾는 헬퍼
 export function getProjectBySlug(slug: string) {
   return projects.find((p) => p.slug === slug);
 }

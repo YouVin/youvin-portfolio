@@ -14,7 +14,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
   if (!project) {
     return (
-      <section className="space-y-6">
+      <section className="space-y-6 px-4 sm:px-6 lg:px-10">
         <h1 className="text-xl font-bold text-red-600">
           프로젝트를 찾을 수 없어요.
         </h1>
@@ -28,198 +28,224 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
-  // --- 렌더링 헬퍼: 이미지 영역 ---
+  // -------------------------------
+  // 공통 스타일 (폰 프레임 크기 통일)
+  // -------------------------------
+  const PHONE_SIZE = "w-[200px] h-[380px] md:w-[200px] md:h-[380px]";
+  const PHONE_FRAME =
+    "relative rounded-[28px] border border-neutral-200 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.06)]";
+  const PHONE_IMG = "object-contain bg-white p-3 md:p-4";
+
+  // --- 렌더링 헬퍼: 2열 레이아웃용 이미지 박스 ---
   function renderSectionImage(section: {
     layout: "single-vertical" | "single-horizontal" | "multi-vertical";
     images: string[];
     title: string;
     align?: "left" | "right";
   }) {
-    const singleVerticalBox = (
-      <div className="relative w-[200px] h-[380px] rounded-2xl overflow-hidden border border-neutral-200 shadow-lg bg-white">
+    // 공통 단일 카드
+    const singleCard = (
+      <div className={`${PHONE_FRAME} ${PHONE_SIZE}`}>
         <Image
           src={section.images[0]}
           alt={section.title}
           fill
-          className="object-contain bg-white"
+          className={PHONE_IMG}
         />
       </div>
     );
 
     if (section.layout === "single-vertical") {
       return (
-        <div
-          className={["flex justify-center items-center md:w-1/2"].join(" ")}
-        >
-          {singleVerticalBox}
+        <div className="flex justify-center items-center md:w-1/2">
+          {singleCard}
         </div>
       );
     }
 
     if (section.layout === "single-horizontal") {
       return (
-        <div
-          className={[
-            "flex justify-center items-center",
-            "w-full md:w-1/2",
-          ].join(" ")}
-        >
-          <div className="relative w-full h-[180px] rounded-xl overflow-hidden border border-neutral-200 shadow-lg bg-white">
-            <Image
-              src={section.images[0]}
-              alt={section.title}
-              fill
-              className="object-contain bg-white"
-            />
-          </div>
+        <div className="flex justify-center items-center md:w-1/2">
+          {singleCard}
         </div>
       );
     }
 
-    if (section.layout === "multi-vertical") {
-      return (
-        <div
-          className={["flex justify-center items-center gap-4 md:w-1/2"].join(
-            " "
-          )}
-        >
-          {section.images.map((imgSrc, i) => (
-            <div
-              key={i}
-              className="relative w-[200px] h-[380px] rounded-2xl overflow-hidden border border-neutral-200 shadow-md bg-white"
-            >
-              <Image
-                src={imgSrc}
-                alt={`${section.title}-${i}`}
-                fill
-                className="object-contain bg-white"
-              />
-            </div>
-          ))}
-        </div>
-      );
-    }
-
+    // multi-vertical은 renderStage로 처리
     return null;
   }
 
+  // --- 렌더링 헬퍼: 여러 이미지 스테이지 ---
+  function renderStage(images: string[], title: string) {
+    return (
+      <div
+        className="flex justify-center items-start gap-6 md:gap-10
+                    mb-12 md:mb-20 pb-6 md:pb-12"
+      >
+        {" "}
+        {images.map((imgSrc, i) => (
+          <figure
+            key={i}
+            className={`${PHONE_FRAME} ${PHONE_SIZE} ${
+              i === 1 ? "translate-y-6 md:translate-y-8" : ""
+            }`}
+          >
+            <Image
+              src={imgSrc}
+              alt={`${title} UI-${i}`}
+              fill
+              sizes="(max-width: 768px) 200px, 200px"
+              className={PHONE_IMG}
+            />
+          </figure>
+        ))}
+      </div>
+    );
+  }
+
+  // -------------------------------------
+  // 실제 렌더링 파트
+  // -------------------------------------
   return (
-    <section className="space-y-16">
-      {/* 1. HERO 영역 (그대로 두고) */}
+    <section className="space-y-20 px-4 sm:px-6 lg:px-10">
+      {/* HERO — Glass Overlay Card */}
       {project.heroImage ? (
         <section className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
-          <div className="relative w-full h-[220px] md:h-[260px]">
+          <div className="relative w-full h-60 md:h-[300px]">
             <Image
-              src={project.heroImage}
+              src={project.heroImage!}
               alt={`${project.title} hero`}
               fill
-              className="object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 1024px"
+              className="object-cover"
               priority
             />
 
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
 
-            <div className="absolute left-5 top-5 md:left-8 md:top-8 max-w-[80%] text-white space-y-3">
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="space-y-1">
-                  <h1 className="text-xl md:text-2xl font-bold leading-tight text-white">
+            <div className="absolute left-4 top-4 md:left-6 md:top-6 max-w-[680px]">
+              <div className="backdrop-blur-md bg-white/20 border border-white/30 text-white rounded-2xl p-4 md:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] space-y-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h1 className="text-lg md:text-2xl font-bold tracking-tight">
                     {project.title}
                   </h1>
-                  <p className="text-xs md:text-sm text-white/80 font-medium">
+                  <span className="text-[11px] md:text-xs text-white/80">
                     {project.period}
-                  </p>
+                  </span>
                 </div>
 
-                <div className="flex flex-wrap gap-2 text-[10px] md:text-[11px] font-medium">
+                <ul className="flex flex-wrap gap-2">
                   {project.stack.map((tech) => (
-                    <span
+                    <li
                       key={tech}
-                      className="rounded-md bg-white/10 px-2 py-1 text-white border border-white/30 backdrop-blur-sm"
+                      className="text-[10px] md:text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/40 bg-white/10"
                     >
                       {tech}
-                    </span>
+                    </li>
                   ))}
-                </div>
-              </div>
+                </ul>
 
-              <p className="text-[11px] md:text-sm leading-relaxed text-white/90">
-                {project.summary}
-              </p>
+                <p className="text-[12px] md:text-sm leading-relaxed line-clamp-2">
+                  {project.summary}
+                </p>
 
-              <div className="flex flex-wrap gap-2 text-[11px] md:text-sm font-medium">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block rounded-lg bg-white text-neutral-900 px-3 py-1.5 hover:bg-neutral-100 transition"
-                >
-                  GitHub Repo
-                </a>
-
-                {project.demo ? (
+                <div className="flex flex-wrap gap-2 text-[12px] md:text-sm font-medium">
                   <a
-                    href={project.demo}
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block rounded-lg bg-white/90 text-neutral-900 px-3 py-1.5 hover:bg-white transition"
+                    className="inline-flex items-center gap-2 rounded-lg bg-white text-neutral-900 px-3 py-1.5 hover:bg-neutral-100 transition"
                   >
-                    Live Demo
+                    GitHub Repo
                   </a>
-                ) : null}
 
-                <Link
-                  href="/projects"
-                  className="inline-block rounded-lg bg-white/20 border border-white/30 text-white px-3 py-1.5 hover:bg-white/30 transition"
-                >
-                  ← Back to Projects
-                </Link>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-white/90 text-neutral-900 px-3 py-1.5 hover:bg-white transition"
+                    >
+                      Live Demo
+                    </a>
+                  )}
+
+                  <Link
+                    href="/projects"
+                    className="inline-flex items-center gap-1 rounded-lg border border-white/40 bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition"
+                  >
+                    ← Back to Projects
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </section>
       ) : (
-        <header className="space-y-4">{/* ... */}</header>
+        <header className="space-y-4" />
       )}
 
-      {/* 2. 기술 하이라이트 */}
+      {/* ② 기술 하이라이트 (간격 넉넉하게) */}
       {project.techSections && project.techSections.length > 0 ? (
-        <section className="space-y-12">
+        <section className="space-y-14">
           <h2 className="text-lg font-semibold text-neutral-900">
             기술 하이라이트
           </h2>
 
           {project.techSections.map((section, idx) => {
-            const isReversed = idx % 2 === 1; // 0,2번째는 기본 / 1,3번째는 반전
+            const imgCount = section.images?.filter(Boolean)?.length ?? 0;
+            const isStage = section.layout === "multi-vertical" && imgCount > 1;
+            if (isStage) {
+              return (
+                <div key={idx} className="space-y-6 md:space-y-10">
+                  <div
+                    className="
+          flex flex-col items-center text-center
+          md:flex-row md:items-start md:justify-between md:text-left md:gap-24
+        "
+                  >
+                    <h3
+                      className="
+            text-xl font-semibold text-neutral-900
+            md:w-[32%] md:shrink-0 md:pr-8
+          "
+                    >
+                      {section.title}
+                    </h3>
+                    <p
+                      className="
+            text-neutral-600 text-sm leading-7 whitespace-pre-line
+            md:w-[68%] md:pl-4
+          "
+                    >
+                      {section.body}
+                    </p>
+                  </div>
 
-            const alignSide = isReversed ? "right" : "left";
+                  {renderStage(section.images, section.title)}
+                </div>
+              );
+            }
 
             return (
               <div
                 key={idx}
-                className={[
-                  "flex flex-col items-center gap-10",
-                  isReversed ? "md:flex-row-reverse" : "md:flex-row",
-                ].join(" ")}
+                className={`flex flex-col md:flex-row gap-12 ${
+                  idx % 2 === 1 ? "md:flex-row-reverse" : ""
+                } items-center md:items-start`}
               >
-                {/* 이미지 영역 */}
-                {renderSectionImage({
-                  ...section,
-                  align: alignSide,
-                })}
-
-                {/* 텍스트 영역 */}
+                {renderSectionImage(section)}
                 <div
-                  className={[
-                    "md:w-1/2 space-y-3",
-                    isReversed
+                  className={`md:w-[45%] md:max-w-[400px] space-y-2 ${
+                    idx % 2 === 1
                       ? "text-center md:text-right"
-                      : "text-center md:text-left",
-                  ].join(" ")}
+                      : "text-center md:text-left"
+                  }`}
                 >
                   <h3 className="text-xl font-semibold text-neutral-900">
                     {section.title}
                   </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">
+                  <p className="text-neutral-600 text-sm leading-relaxed tracking-normal whitespace-pre-line">
                     {section.body}
                   </p>
                 </div>
@@ -229,7 +255,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </section>
       ) : null}
 
-      {/* 3. 화면 미리보기 (원래 섹션, 그대로 두되 높이 좀만 줄여도 됨) */}
+      {/* 화면 미리보기 (그대로) */}
       {project.previewImages && project.previewImages.length > 0 ? (
         <section className="space-y-6">
           <h2 className="text-lg font-semibold text-neutral-900">
@@ -240,7 +266,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             {project.previewImages.map((shot, idx) => (
               <div
                 key={idx}
-                className="relative w-full h-44 md:h-56 rounded-lg border border-neutral-200 bg-neutral-50 overflow-hidden shadow-sm"
+                className="relative w-full h-64 md:h-64 rounded-lg border border-neutral-200 bg-neutral-50 overflow-hidden shadow-sm"
               >
                 <Image
                   src={shot.src}
