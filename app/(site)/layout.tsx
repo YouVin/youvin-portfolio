@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import ThemeWrapper from "@/components/ThemeWrapper";
+import "../globals.css";
+import Navbar from "@/app/components/Navbar";
+import ThemeWrapper from "@/app/components/ThemeWrapper";
 
 export const metadata: Metadata = {
   title: "YouVin Portfolio",
