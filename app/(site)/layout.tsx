@@ -18,8 +18,10 @@ export default function RootLayout({
       <body className="antialiased transition-colors">
         <ThemeWrapper>
           <Navbar />
-          <main className="mx-auto max-w-5xl px-4 py-12">{children}</main>
-          <footer className="mx-auto max-w-5xl px-4 py-12 text-xs text-neutral-400">
+          <main className="min-h-screen bg-background">
+            <div className="mx-auto max-w-5xl px-4 ">{children}</div>
+          </main>
+          <footer className="mx-auto max-w-5xl px-4 py-12 text-xs bg-background text-neutral-400">
             © {new Date().getFullYear()} YouVin — Frontend Developer
           </footer>
         </ThemeWrapper>

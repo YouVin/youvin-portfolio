@@ -1,4 +1,4 @@
-// "@/components/Section.tsx"
+// components/Section.tsx
 export function Section({
   id,
   className = "",
@@ -13,8 +13,9 @@ export function Section({
       id={id}
       className={[
         "scroll-mt-28",
-        "min-h-[88vh]",
-        "py-24 md:py-36 lg:py-40",
+        "min-h-[86vh]",
+        "grid place-items-center",
+        "py-16 md:py-24",
         className,
       ].join(" ")}
     >

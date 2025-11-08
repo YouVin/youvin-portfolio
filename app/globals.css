@@ -1,41 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg: #f6f2ea; /* 전체 바탕 */
+  --foreground: #2a2a2a; /* 텍스트 */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --primary: #6f8a5f; /* 세이지 포인트 */
+  --secondary: #c9a27b; /* 따뜻한 크림 라떼 */
+  --accent: #efe6d9; /* 버튼/패널 라이트톤 */
+  --panel: #ffffff; /* 카드 배경 흰색 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #181612;
+    --foreground: #ecebe8;
+    --primary: #a7c59a;
+    --secondary: #d7ba97;
+    --accent: #1f1b17;
+    --panel: #15130f;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-panel: var(--panel);
 }
-/* 부드러운 앵커 스크롤 */
+
 html,
 body {
-  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--foreground);
 }
 
-/* 사용자가 모션 최소화를 켠 경우 애니메이션 줄이기 */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+.hero-bg {
+  background: radial-gradient(
+      800px 500px at 50% 50%,
+      color-mix(in srgb, var(--primary) 12%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--bg);
 }
