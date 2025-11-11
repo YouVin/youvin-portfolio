@@ -13,28 +13,31 @@ export default function Navbar() {
     { href: "/about", label: "About" },
   ];
 
-  // Zustand에서 theme과 toggle 불러오기
   const theme = useUIStore((s) => s.theme);
   const toggleTheme = useUIStore((s) => s.toggleTheme);
-
-  // 다크모드인지 여부
   const isDark = theme === "dark";
 
   return (
-    <header className="w-full border-b border-neutral-200 bg-white/80 backdrop-blur-sm dark:bg-neutral-900/80 dark:border-neutral-800">
+    <header
+      className="
+        w-full 
+        bg-background/85 backdrop-blur-md 
+        border-b border-secondary/60
+      "
+    >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-        {/* left: logo / name */}
+        {/* Left: Logo */}
         <Link
           href="/"
-          className="text-lg font-semibold text-neutral-900 hover:opacity-80 dark:text-neutral-100"
+          className="text-lg font-semibold text-foreground hover:text-primary transition-colors"
         >
           youvin.dev
         </Link>
 
-        {/* right side */}
+        {/* Right */}
         <div className="flex items-center gap-4">
-          {/* nav links */}
-          <ul className="flex items-center gap-6 text-sm font-medium text-neutral-600 dark:text-neutral-300">
+          {/* Nav Links */}
+          <ul className="flex items-center gap-6 text-sm font-medium">
             {navItems.map((item) => {
               const isActive =
                 item.href === "/"
@@ -45,11 +48,11 @@ export default function Navbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`transition-colors hover:text-neutral-900 dark:hover:text-white ${
-                      isActive
-                        ? "text-neutral-900 dark:text-white"
-                        : "text-neutral-600 dark:text-neutral-300"
-                    }`}
+                    className={`
+                      transition-colors 
+                      hover:text-primary
+                      ${isActive ? "text-foreground" : "text-muted"}
+                    `}
                   >
                     {item.label}
                   </Link>
@@ -57,23 +60,35 @@ export default function Navbar() {
               );
             })}
 
-            {/* GitHub 버튼 */}
+            {/* GitHub Button */}
             <li>
               <a
                 href="https://github.com/YouVin"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg border border-neutral-300 px-3 py-1.5 text-xs font-semibold text-neutral-800 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800"
+                className="
+                  rounded-lg border border-secondary/70 
+                  px-3 py-1.5 text-xs font-semibold 
+                  text-foreground 
+                  hover:bg-secondary/60 hover:text-primary 
+                  transition-colors
+                "
               >
                 GitHub
               </a>
             </li>
           </ul>
 
-          {/* theme toggle button */}
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="rounded-md border border-neutral-300 bg-white px-2 py-1 text-xs font-medium text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700"
+            className="
+              rounded-md border border-secondary/70 
+              bg-panel px-2 py-1 
+              text-xs font-medium text-foreground 
+              hover:bg-secondary/50 hover:text-primary 
+              transition-colors
+            "
           >
             {isDark ? "🌙 Dark" : "☀️ Light"}
           </button>

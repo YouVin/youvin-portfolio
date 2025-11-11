@@ -1,46 +1,39 @@
 @import "tailwindcss";
 
+/* ====== Light Theme ====== */
 :root {
-  --bg: #f6f2ea; /* 전체 바탕 */
-  --foreground: #2a2a2a; /* 텍스트 */
+  --background: #f9f8f6; /* 메인 배경 */
+  --foreground: #2a2a2a; /* 글자 기본 */
 
-  --primary: #6f8a5f; /* 세이지 포인트 */
-  --secondary: #c9a27b; /* 따뜻한 크림 라떼 */
-  --accent: #efe6d9; /* 버튼/패널 라이트톤 */
-  --panel: #ffffff; /* 카드 배경 흰색 */
+  --color-primary: #c9b59c; /* 포인트 (버튼/강조 텍스트) */
+  --color-secondary: #d9cfc7; /* 섹션/카드 백그라운드 */
+  --color-panel: #efe9e3; /* 패널, 섹션 라운드 카드 */
+
+  --color-muted: #8a857f; /* 흐린 텍스트 */
 }
 
+/* ====== Dark Theme ====== */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #181612;
-    --foreground: #ecebe8;
-    --primary: #a7c59a;
-    --secondary: #d7ba97;
-    --accent: #1f1b17;
-    --panel: #15130f;
+    --background: #1b1a19;
+    --foreground: #eceae7;
+
+    --color-primary: #d8c8b4;
+    --color-secondary: #3a3836;
+    --color-panel: #2a2928;
+
+    --color-muted: #b7b1ab;
   }
 }
 
-@theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-panel: var(--panel);
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* 부드러운 스크롤 */
 html,
 body {
-  background: var(--bg);
-  color: var(--foreground);
-}
-
-.hero-bg {
-  background: radial-gradient(
-      800px 500px at 50% 50%,
-      color-mix(in srgb, var(--primary) 12%, transparent) 0%,
-      transparent 70%
-    ),
-    var(--bg);
+  scroll-behavior: smooth;
 }
