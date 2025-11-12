@@ -10,6 +10,13 @@
   --color-panel: #efe9e3; /* 패널, 섹션 라운드 카드 */
 
   --color-muted: #8a857f; /* 흐린 텍스트 */
+
+  --bg-0: #f9f8f6; /* 가장 밝은 배경 */
+  --bg-1: #efe9e3; /* 섹션 배경 */
+  --bg-2: #d9cfc7; /* 카드/패널 */
+  --ink: #2b2b2b; /* 본문 텍스트 */
+  --primary: #c9b59c; /* 포인트(따뜻한 베이지) */
+  --muted: #6f6b67; /* 보조 텍스트 */
 }
 
 /* ====== Dark Theme ====== */
@@ -23,6 +30,13 @@
     --color-panel: #2a2928;
 
     --color-muted: #b7b1ab;
+
+    --bg-0: #151310;
+    --bg-1: #1c1916;
+    --bg-2: #2a2622;
+    --ink: #eceae7;
+    --primary: #d8c8ae;
+    --muted: #a79f98;
   }
 }
 
