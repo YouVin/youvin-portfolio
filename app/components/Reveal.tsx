@@ -10,7 +10,7 @@ interface RevealProps {
   delay?: number;
   once?: boolean;
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
   y?: YMode; // number | "auto"
   intensity?: Intensity; // "auto"일 때 강도 힌트(옵션)
   duration?: number;
@@ -23,9 +23,9 @@ export default function Reveal({
   delay = 0,
   once = true,
   className = "",
-  children,
-  y = "auto", // ✅ 기본을 자동으로
-  intensity = "base", // "soft" | "base" | "bold"
+  children = null,
+  y = "auto",
+  intensity = "base",
   duration = 0.7,
   threshold = 0.45,
   rootMargin = "0px 0px -25% 0px",

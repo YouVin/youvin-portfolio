@@ -8,8 +8,10 @@
   --color-primary: #c9b59c; /* 포인트 (버튼/강조 텍스트) */
   --color-secondary: #d9cfc7; /* 섹션/카드 백그라운드 */
   --color-panel: #efe9e3; /* 패널, 섹션 라운드 카드 */
-
   --color-muted: #8a857f; /* 흐린 텍스트 */
+
+  --hero-red: rgba(238, 92, 78, 0.28); /* 부드러운 레드톤 */
+  --hero-teal: rgba(46, 210, 189, 0.28); /* 부드러운 틸톤 */
 
   --bg-0: #f9f8f6; /* 가장 밝은 배경 */
   --bg-1: #efe9e3; /* 섹션 배경 */
@@ -25,6 +27,8 @@
     --background: #1b1a19;
     --foreground: #eceae7;
 
+    --hero-red: rgba(238, 92, 78, 0.22);
+    --hero-teal: rgba(46, 210, 189, 0.22);
     --color-primary: #d8c8b4;
     --color-secondary: #3a3836;
     --color-panel: #2a2928;

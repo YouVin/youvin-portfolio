@@ -22,7 +22,7 @@ function applyTheme(theme: Theme) {
 
 export const useUIStore = create<UIState>((set, get) => ({
   // 기본은 'dark'로 시작하도록
-  theme: "dark",
+  theme: "light",
   setTheme: (t) => {
     set({ theme: t });
     if (typeof window !== "undefined") {
