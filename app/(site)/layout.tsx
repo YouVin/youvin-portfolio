@@ -1,6 +1,6 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "../globals.css";
-import Navbar from "@/app/components/Navbar";
 import ThemeWrapper from "@/app/components/ThemeWrapper";
 
 export const metadata: Metadata = {
@@ -17,9 +17,8 @@ export default function RootLayout({
     <html lang="ko">
       <body className="antialiased transition-colors">
         <ThemeWrapper>
-          <Navbar />
           <main className="min-h-screen bg-background">
-            <div className="mx-auto max-w-5xl px-4 ">{children}</div>
+            <div className="mx-auto max-w-5xl px-4">{children}</div>
           </main>
           <footer className="mx-auto max-w-5xl px-4 py-12 text-xs bg-background text-neutral-400">
             © {new Date().getFullYear()} YouVin — Frontend Developer
