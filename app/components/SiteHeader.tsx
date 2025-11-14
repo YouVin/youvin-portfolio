@@ -4,11 +4,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Reveal from "@/app/components/Reveal";
 
 type Props = {
-  className?: string; // 카드 스타일(테두리/배경 등)
-  dock?: boolean; // 도킹 기능 on/off
-  topClass?: string; // 도킹 시 상단 여백
+  className?: string;
+  dock?: boolean;
+  topClass?: string;
 };
 
 export default function SiteHeader({
@@ -25,15 +26,13 @@ export default function SiteHeader({
 
   const sentryRef = useRef<HTMLDivElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const innerRef = useRef<HTMLDivElement | null>(null); // 실제 가시 너비 측정 대상
+  const innerRef = useRef<HTMLDivElement | null>(null);
 
-  // 1) 초기 높이 기록
   useEffect(() => {
     if (!dock) return;
     if (wrapRef.current) setSpacerH(wrapRef.current.offsetHeight);
   }, [dock]);
 
-  // 2) 도킹 기준점 관찰
   useEffect(() => {
     if (!dock) return;
     const io = new IntersectionObserver(
@@ -44,7 +43,6 @@ export default function SiteHeader({
     return () => io.disconnect();
   }, [dock]);
 
-  // 3) 도킹 전(=stuck=false) 실제 렌더 폭을 측정해서 저장
   useEffect(() => {
     if (!dock) return;
 
@@ -55,7 +53,7 @@ export default function SiteHeader({
       }
     };
 
-    measure(); // mount 시
+    measure();
     const ro = new ResizeObserver(() => measure());
     if (innerRef.current) ro.observe(innerRef.current);
     window.addEventListener("resize", measure);
@@ -66,9 +64,13 @@ export default function SiteHeader({
     };
   }, [dock, stuck]);
 
-  // --- 네비 내용 (크기/패딩 고정)
   const Nav = (
-    <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+    <Reveal
+      as="nav"
+      intensity="soft"
+      delay={0.06}
+      className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"
+    >
       <Link
         href="/"
         className="text-base font-semibold text-foreground hover:text-primary transition-colors"
@@ -78,9 +80,8 @@ export default function SiteHeader({
 
       <ul className="flex items-center gap-6 text-sm font-medium">
         {[
-          { href: "/", label: "Home" },
+          { href: "/skills", label: "Skills" },
           { href: "/projects", label: "Projects" },
-          { href: "/about", label: "About" },
         ].map((item) => {
           const active =
             item.href === "/"
@@ -110,13 +111,13 @@ export default function SiteHeader({
           </a>
         </li>
       </ul>
-    </nav>
+    </Reveal>
   );
 
   // ── dock off: 그냥 헤더
   if (!dock) return <header className={className}>{Nav}</header>;
 
-  // ── dock on: 위치만 전환, 너비는 도킹 전 측정값으로 픽스
+  // ── dock on: 위치 전환만 담당 (여기에는 transform 안 걸림!)
   return (
     <div className="relative">
       <div ref={sentryRef} className="absolute -top-1 h-1 w-full" aria-hidden />
@@ -130,7 +131,6 @@ export default function SiteHeader({
           "inset-x-0 z-50 transition-colors duration-300",
         ].join(" ")}
       >
-        {/* 도킹 전: max-w 컨테이너 / 도킹 후: 측정한 px 너비로 고정 */}
         <div
           ref={innerRef}
           className="mx-auto px-2"
@@ -138,10 +138,11 @@ export default function SiteHeader({
         >
           <header
             className={[
-              "rounded-2xl border border-secondary/70",
+              "rounded-2xl border border-zinc-200/70",
+              "transition-all duration-500 ease-out",
               stuck
-                ? "bg-background/80 backdrop-blur-md shadow-lg shadow-black/5"
-                : "bg-background/60 backdrop-blur-[2px] shadow-md",
+                ? "bg-white/70 backdrop-blur-md shadow-lg shadow-black/5"
+                : "bg-white/50 backdrop-blur-sm shadow-sm",
               className,
             ].join(" ")}
           >

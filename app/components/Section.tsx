@@ -1,23 +1,25 @@
-// components/Section.tsx
 export function Section({
   id,
   className = "",
   children,
+  fullHeight = false,
 }: {
   id: string;
   className?: string;
   children: React.ReactNode;
+  fullHeight?: boolean;
 }) {
   return (
     <section
       id={id}
       className={[
+        fullHeight ? "min-h-[86vh] grid place-items-center" : "",
         "scroll-mt-28",
-        "min-h-[86vh]",
-        "grid place-items-center",
-        "py-16 md:py-24",
+        "py-2 md:py-3",
         className,
-      ].join(" ")}
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       {children}
     </section>

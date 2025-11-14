@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Reveal from "@/app/components/Reveal";
 import { Section } from "@/app/components/Section";
@@ -18,8 +19,9 @@ export default function SkillsSection({
       : "sm:grid-cols-2 md:grid-cols-3";
 
   return (
-    <Section id="skills" className="bg-neutral-50">
+    <Section id="skills">
       <div className={`mx-auto w-full ${wrapper} px-6`}>
+        {/* 상단 헤딩 */}
         <Reveal
           as="h2"
           intensity="bold"
@@ -28,25 +30,21 @@ export default function SkillsSection({
           이렇게 만듭니다
         </Reveal>
 
+        {/* 스킬 뱃지 */}
         <div className={`mt-6 grid gap-3 ${gridCols}`}>
-          <Reveal intensity="soft">
-            <SkillBadge label="Optimistic UI" />
-          </Reveal>
-          <Reveal intensity="soft">
-            <SkillBadge label="Server–Client State Sync" />
-          </Reveal>
-          <Reveal intensity="soft">
-            <SkillBadge label="Design System / Tokens" />
-          </Reveal>
-          <Reveal intensity="soft">
-            <SkillBadge label="React · Next.js" />
-          </Reveal>
-          <Reveal intensity="soft">
-            <SkillBadge label="Zustand" />
-          </Reveal>
-          <Reveal intensity="soft">
-            <SkillBadge label="Testing / Storybook" />
-          </Reveal>
+          {[
+            "Optimistic UI",
+            "Server–Client State Sync",
+            "Design System / Tokens",
+            "React · Next.js",
+            "Zustand",
+            "Testing / Storybook",
+          ].map((skill) => (
+            <Reveal key={skill} intensity="soft">
+              <SkillBadge label={skill} />
+            </Reveal>
+          ))}
+
           {variant === "full" && (
             <>
               <Reveal intensity="soft">
@@ -59,7 +57,8 @@ export default function SkillsSection({
           )}
         </div>
 
-        {variant === "teaser" ? (
+        {/* 버튼 */}
+        {variant === "teaser" && (
           <Reveal intensity="soft" className="mt-8">
             <Link
               href="/skills"
@@ -68,7 +67,7 @@ export default function SkillsSection({
               Skills 자세히 보기 →
             </Link>
           </Reveal>
-        ) : null}
+        )}
       </div>
     </Section>
   );
