@@ -10,7 +10,7 @@ type Variant = "teaser" | "full";
 
 type SkillIcon = {
   label: string;
-  src?: string; // 나중에 아이콘 경로 넣을 곳 (/public/icons/...)
+  src?: string;
 };
 
 type SkillCategory = {
@@ -125,7 +125,7 @@ export default function SkillsSection({
                   className={[
                     "pointer-events-none absolute inset-0 -z-10",
                     cat.toneBg,
-                    "[mask-image:radial-gradient(circle_at_top,black,transparent_65%)]",
+                    "mask-[radial-gradient(circle_at_top,black,transparent_65%)]",
                   ].join(" ")}
                 />
 
