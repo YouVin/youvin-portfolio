@@ -27,13 +27,12 @@ const CATEGORIES: SkillCategory[] = [
     toneBg:
       "bg-[radial-gradient(circle_at_top_left,rgba(248,113,113,0.18),transparent_60%)]",
     skills: [
-      { label: "React" },
-      { label: "Next.js" },
-      { label: "TypeScript" },
-      { label: "JavaScript" },
-      { label: "HTML5" },
-      { label: "CSS3" },
-      { label: "Tailwind CSS" },
+      { label: "React", src: "/icons/frontend/react.svg" },
+      { label: "Next.js", src: "/icons/frontend/nextdotjs.svg" },
+      { label: "TypeScript", src: "/icons/frontend/typescript.svg" },
+      { label: "JavaScript", src: "/icons/frontend/javascript.svg" },
+      { label: "HTML5", src: "/icons/frontend/html5.svg" },
+      { label: "Tailwind CSS", src: "/icons/frontend/tailwindcss.svg" },
     ],
   },
   {
@@ -68,8 +67,6 @@ const CATEGORIES: SkillCategory[] = [
       { label: "VS Code" },
       { label: "Git" },
       { label: "GitHub" },
-      { label: "ESLint" },
-      { label: "Prettier" },
       { label: "Cloudinary" },
       { label: "Notion" },
       { label: "Slack" },
