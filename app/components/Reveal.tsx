@@ -11,8 +11,8 @@ interface RevealProps {
   once?: boolean;
   className?: string;
   children?: ReactNode;
-  y?: YMode; // number | "auto"
-  intensity?: Intensity; // "auto"일 때 강도 힌트(옵션)
+  y?: YMode;
+  intensity?: Intensity;
   duration?: number;
   threshold?: number;
   rootMargin?: string;
@@ -34,7 +34,6 @@ export default function Reveal({
   const [show, setShow] = useState(false);
   const [yAuto, setYAuto] = useState<number>(24);
 
-  // 강도별 배율(취향에 맞게 조절 가능)
   const scale = useMemo(() => {
     switch (intensity) {
       case "soft":
@@ -46,7 +45,6 @@ export default function Reveal({
     }
   }, [intensity]);
 
-  // 요소/뷰포트 크기 기반으로 y 계산해서 클램프
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -54,16 +52,13 @@ export default function Reveal({
     const compute = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 800;
-      // 기준: 요소 높이의 일부 + 뷰포트 비율을 섞어서 자연스럽게
       const raw = rect.height * scale + vh * 0.02;
-      // 과도한 점프 방지: 12px ~ 56px 사이로 클램프
       const ypx = Math.max(12, Math.min(raw, 56));
       setYAuto(Math.round(ypx));
     };
 
     compute();
 
-    // 리사이즈/글꼴 로딩/콘텐츠 변화 대응
     const ro = new ResizeObserver(() => compute());
     ro.observe(el);
     window.addEventListener("resize", compute);

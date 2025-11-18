@@ -1,10 +1,31 @@
 // app/components/sections/SkillsSection.tsx
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Reveal from "@/app/components/Reveal";
 import { Section } from "@/app/components/Section";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiHtml5,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiExpress,
+  SiMongodb,
+  SiFigma,
+  SiGit,
+  SiGithub,
+  SiCloudinary,
+  SiNotion,
+  SiSlack,
+  SiVercel,
+  SiJsonwebtokens,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
 
 type Variant = "teaser" | "full";
 
@@ -13,11 +34,66 @@ type SkillIcon = {
   src?: string;
 };
 
+type SkillCategoryId = "frontend" | "backend" | "design" | "tools";
+
 type SkillCategory = {
-  id: string;
+  id: SkillCategoryId;
   title: string;
   toneBg: string;
   skills: SkillIcon[];
+};
+
+const ICON_MAP: Record<string, IconType> = {
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  TypeScript: SiTypescript,
+  JavaScript: SiJavascript,
+  HTML5: SiHtml5,
+  "Tailwind CSS": SiTailwindcss,
+
+  "Node.js": SiNodedotjs,
+  Express: SiExpress,
+  MongoDB: SiMongodb,
+  "JWT Auth": SiJsonwebtokens,
+
+  Figma: SiFigma,
+
+  Git: SiGit,
+  GitHub: SiGithub,
+  Cloudinary: SiCloudinary,
+  Notion: SiNotion,
+  Slack: SiSlack,
+  Vercel: SiVercel,
+};
+
+const BRAND_COLOR: Record<string, string> = {
+  React: "#61DAFB",
+  "Next.js": "#000000",
+  TypeScript: "#3178C6",
+  JavaScript: "#F7DF1E",
+  HTML5: "#E34F26",
+  "Tailwind CSS": "#38BDF8",
+
+  "Node.js": "#539E43",
+  Express: "#000000",
+  MongoDB: "#47A248",
+  "JWT Auth": "#000000",
+
+  Figma: "#F24E1E",
+
+  Git: "#F05032",
+  GitHub: "#181717",
+  Cloudinary: "#3448C5",
+  Notion: "#000000",
+  Slack: "#4A154B",
+  Vercel: "#000000",
+};
+
+const TAB_COLOR: Record<SkillCategoryId, string> = {
+  frontend: "text-[#d9a8a8]",
+  backend: "text-[#9bc7b5]",
+  design: "text-[#a7c0e8]",
+  tools: "text-[#d6c3a4]",
 };
 
 const CATEGORIES: SkillCategory[] = [
@@ -41,10 +117,10 @@ const CATEGORIES: SkillCategory[] = [
     toneBg:
       "bg-[radial-gradient(circle_at_top_right,rgba(45,212,191,0.20),transparent_60%)]",
     skills: [
-      { label: "Node.js" },
-      { label: "Express" },
-      { label: "MongoDB" },
-      { label: "JWT Auth" },
+      { label: "Node.js", src: "/icons/backend/nodedotjs.svg" },
+      { label: "Express", src: "/icons/backend/express.svg" },
+      { label: "MongoDB", src: "/icons/backend/mongodb.svg" },
+      { label: "JWT Auth", src: "/icons/backend/nodedotjs.svg" },
     ],
   },
   {
@@ -52,26 +128,20 @@ const CATEGORIES: SkillCategory[] = [
     title: "Design",
     toneBg:
       "bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.18),transparent_60%)]",
-    skills: [
-      { label: "Figma" },
-      { label: "Design System" },
-      { label: "UI Prototype" },
-    ],
+    skills: [{ label: "Figma", src: "/icons/design/figma.svg" }],
   },
   {
     id: "tools",
-    title: "Tools · Others",
+    title: "Tools",
     toneBg:
       "bg-[radial-gradient(circle_at_top_right,rgba(251,191,36,0.18),transparent_60%)]",
     skills: [
-      { label: "VS Code" },
-      { label: "Git" },
-      { label: "GitHub" },
-      { label: "Cloudinary" },
-      { label: "Notion" },
-      { label: "Slack" },
-      { label: "Vercel" },
-      { label: "Koyeb" },
+      { label: "Git", src: "/icons/tools/git.svg" },
+      { label: "GitHub", src: "/icons/tools/github.svg" },
+      { label: "Cloudinary", src: "/icons/tools/cloudinary.svg" },
+      { label: "Notion", src: "/icons/tools/notion.svg" },
+      { label: "Slack", src: "/icons/tools/slack.svg" },
+      { label: "Vercel", src: "/icons/tools/vercel.svg" },
     ],
   },
 ];
@@ -85,9 +155,12 @@ export default function SkillsSection({
   const visibleCategories =
     variant === "teaser" ? CATEGORIES.slice(0, 4) : CATEGORIES;
 
+  const [activeId, setActiveId] = useState<SkillCategoryId>("frontend");
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   return (
     <Section id="skills">
-      <div className={`mx-auto w-full ${wrapper} px-6 text-center`}>
+      <div className={`mx-auto w-full ${wrapper} mb-50 px-6 text-center`}>
         {/* 헤더 */}
         <Reveal
           as="h2"
@@ -97,79 +170,113 @@ export default function SkillsSection({
           Skills
         </Reveal>
 
-        {/* 2×2 카드 */}
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
-          {visibleCategories.map((cat, idx) => (
-            <Reveal
-              key={cat.id}
-              as="article"
-              intensity="soft"
-              delay={0.06 * idx}
-              className="h-full"
-            >
-              <div
+        {/* 탭 바 (텍스트 컬러만 바뀌는 형태) */}
+        <Reveal
+          as="div"
+          intensity="soft"
+          className="mt-6 flex items-center justify-center gap-4 md:gap-6"
+        >
+          {CATEGORIES.map((cat) => {
+            const active = hasInteracted && cat.id === activeId;
+
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => {
+                  setActiveId(cat.id);
+                  setHasInteracted(true);
+                }}
                 className={[
-                  "relative h-full rounded-2xl border border-black/5 bg-white/80",
-                  "px-6 py-5 md:px-7 md:py-6",
-                  "shadow-[0_18px_40px_rgba(15,23,42,0.06)]",
-                  "flex flex-col items-center justify-between overflow-hidden",
-                  "backdrop-blur-sm",
+                  "text-sm md:text-base font-medium transition-colors cursor-pointer",
+                  active
+                    ? TAB_COLOR[cat.id]
+                    : "text-muted hover:text-foreground/80",
                 ].join(" ")}
               >
-                {/* 은은한 배경 스팟 */}
+                {cat.title}
+              </button>
+            );
+          })}
+        </Reveal>
+
+        {/* 2×2 카드 */}
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {visibleCategories.map((cat, idx) => {
+            const activeForCard = hasInteracted ? cat.id === activeId : true;
+
+            return (
+              <Reveal
+                key={cat.id}
+                as="article"
+                intensity="soft"
+                delay={0.06 * idx}
+                className="h-full"
+              >
                 <div
-                  aria-hidden
                   className={[
-                    "pointer-events-none absolute inset-0 -z-10",
-                    cat.toneBg,
-                    "mask-[radial-gradient(circle_at_top,black,transparent_65%)]",
+                    "relative h-full rounded-2xl border bg-white/80",
+                    "px-6 py-5 md:px-7 md:py-6",
+                    "flex flex-col items-center justify-between overflow-hidden backdrop-blur-sm",
+                    "transition-all duration-200",
+                    activeForCard
+                      ? "border-black/10 shadow-[0_20px_45px_rgba(15,23,42,0.10)]"
+                      : "border-black/5 shadow-[0_18px_40px_rgba(15,23,42,0.06)] opacity-85",
                   ].join(" ")}
-                />
+                >
+                  {/* 은은한 배경 스팟 */}
+                  <div
+                    aria-hidden
+                    className={[
+                      "pointer-events-none absolute inset-0 -z-10",
+                      cat.toneBg,
+                      "mask-[radial-gradient(circle_at_top,black,transparent_65%)]",
+                    ].join(" ")}
+                  />
 
-                {/* 제목 */}
-                <div className="flex flex-col items-center gap-1">
-                  <h3 className="text-base md:text-lg font-semibold text-foreground">
-                    {cat.title}
-                  </h3>
-                </div>
+                  {/* 제목 */}
+                  <div className="flex flex-col items-center gap-1">
+                    <h3 className="text-base md:text-lg font-semibold text-foreground">
+                      {cat.title}
+                    </h3>
+                  </div>
 
-                {/* 아이콘/뱃지 그리드 */}
-                <div className="mt-4 flex flex-wrap justify-center gap-3 md:gap-3.5">
-                  {cat.skills.map((skill) => (
-                    <div
-                      key={skill.label}
-                      className="flex h-11 min-w-[2.6rem] items-center justify-center rounded-xl bg-white/90 px-3 text-[10px] font-medium text-muted shadow-[0_8px_20px_rgba(15,23,42,0.06)] ring-1 ring-black/5 md:h-12 md:text-[11px]"
-                    >
-                      {skill.src ? (
-                        <Image
-                          src={skill.src}
-                          alt={skill.label}
-                          width={24}
-                          height={24}
-                          className="h-5 w-5 md:h-6 md:w-6"
-                        />
-                      ) : (
-                        <span>{skill.label}</span>
-                      )}
-                    </div>
-                  ))}
+                  {/* 아이콘/뱃지 그리드 */}
+                  <div className="mt-4 flex flex-wrap justify-center gap-3 md:gap-3.5">
+                    {cat.skills.map((skill) => {
+                      const IconComp = ICON_MAP[skill.label];
+                      const brandColor = BRAND_COLOR[skill.label] ?? "#44403c";
+
+                      return (
+                        <div
+                          key={skill.label}
+                          className={[
+                            "flex h-11 min-w-[2.6rem] items-center justify-center rounded-xl bg-white/90 px-3 text-[10px] font-medium shadow-[0_8px_20px_rgba(15,23,42,0.06)] ring-1 ring-black/5 md:h-12 md:text-[11px]",
+                            "transition-all duration-200",
+                            activeForCard ? "opacity-100" : "opacity-60",
+                          ].join(" ")}
+                        >
+                          {IconComp ? (
+                            <IconComp
+                              className="h-5 w-5 md:h-6 md:w-6 transition-all duration-200"
+                              style={{
+                                color: activeForCard ? brandColor : "#a8a29e",
+                              }}
+                            />
+                          ) : (
+                            <span className="text-[10px] md:text-[11px] text-muted">
+                              {skill.label}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
-
-        {/* 전체 보기 버튼 */}
-        {variant === "teaser" && (
-          <Reveal intensity="soft" className="my-20">
-            <Link
-              href="/skills"
-              className="inline-flex items-center justify-center rounded-full border border-foreground/15 px-4 py-2 text-xs md:text-sm font-medium text-foreground hover:bg-white/80 hover:border-foreground/30 transition-colors"
-            >
-              전체 스킬 보기
-            </Link>
-          </Reveal>
-        )}
       </div>
     </Section>
   );

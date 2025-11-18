@@ -1,4 +1,3 @@
-// app/components/sections/HeroSection.tsx
 "use client";
 
 import Link from "next/link";
@@ -36,7 +35,7 @@ export default function HeroSection() {
 
       {/* ===== CONTENT ===== */}
       <div className="mx-auto max-w-2xl px-6 pt-10 pb-4 text-center md:pt-10">
-        {/* 로고 슬롯 */}
+        {/* 로고 */}
         <Reveal
           as="div"
           intensity="soft"
@@ -46,7 +45,7 @@ export default function HeroSection() {
           {/* <Image src="/logo.svg" alt="logo" width={36} height={36}/> */}
         </Reveal>
 
-        {/* 헤드라인(2줄) */}
+        {/* 헤드라인*/}
         <Reveal
           as="h1"
           intensity="bold"
@@ -61,7 +60,7 @@ export default function HeroSection() {
           </span>
         </Reveal>
 
-        {/* 서브 카피 */}
+        {/* 서브 */}
         <Reveal
           as="p"
           intensity="base"
@@ -73,7 +72,7 @@ export default function HeroSection() {
           사용자에게 제품의 가치를 가장 빠르게 전달합니다.
         </Reveal>
 
-        {/* CTA 버튼들 */}
+        {/* CTA 버튼 */}
         <Reveal
           as="div"
           intensity="soft"
