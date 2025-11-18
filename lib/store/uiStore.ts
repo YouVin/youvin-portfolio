@@ -8,7 +8,6 @@ interface UIState {
   toggleTheme: () => void;
 }
 
-// html에 class/data-theme 적용
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -21,7 +20,6 @@ function applyTheme(theme: Theme) {
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
-  // 기본은 'dark'로 시작하도록
   theme: "light",
   setTheme: (t) => {
     set({ theme: t });
@@ -36,7 +34,6 @@ export const useUIStore = create<UIState>((set, get) => ({
   },
 }));
 
-// 클라이언트에서 초기화
 export function initThemeOnce() {
   if (typeof window === "undefined") return;
   try {

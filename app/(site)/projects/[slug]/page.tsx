@@ -28,15 +28,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
-  // -------------------------------
-  // 공통 스타일 (폰 프레임 크기 통일)
-  // -------------------------------
   const PHONE_SIZE = "w-[200px] h-[380px] md:w-[200px] md:h-[380px]";
   const PHONE_FRAME =
     "relative rounded-[28px] border border-neutral-200 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.06)]";
   const PHONE_IMG = "object-contain bg-white p-3 md:p-4";
 
-  // --- 렌더링 헬퍼: 2열 레이아웃용 이미지 박스 ---
   function renderSectionImage(section: {
     layout: "single-vertical" | "single-horizontal" | "multi-vertical";
     images: string[];
@@ -70,12 +66,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </div>
       );
     }
-
-    // multi-vertical은 renderStage로 처리
     return null;
   }
 
-  // --- 렌더링 헬퍼: 여러 이미지 스테이지 ---
   function renderStage(images: string[], title: string) {
     return (
       <div
@@ -103,12 +96,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
-  // -------------------------------------
-  // 실제 렌더링 파트
-  // -------------------------------------
   return (
     <section className="space-y-20 px-4 sm:px-6 lg:px-10">
-      {/* HERO — Glass Overlay Card */}
+      {/* HERO */}
       {project.heroImage ? (
         <section className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
           <div className="relative w-full h-60 md:h-[300px]">
@@ -185,7 +175,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         <header className="space-y-4" />
       )}
 
-      {/* ② 기술 하이라이트 (간격 넉넉하게) */}
+      {/* 기술 하이라이트 */}
       {project.techSections && project.techSections.length > 0 ? (
         <section className="space-y-14">
           <h2 className="text-lg font-semibold text-neutral-900">
@@ -255,7 +245,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </section>
       ) : null}
 
-      {/* 화면 미리보기 (그대로) */}
+      {/* 화면 미리보기 */}
       {project.previewImages && project.previewImages.length > 0 ? (
         <section className="space-y-6">
           <h2 className="text-lg font-semibold text-neutral-900">
@@ -276,7 +266,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 />
 
                 {shot.caption ? (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent text-white p-4">
+                  <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent text-white p-4">
                     <p className="text-xs font-medium leading-snug">
                       {shot.caption}
                     </p>
