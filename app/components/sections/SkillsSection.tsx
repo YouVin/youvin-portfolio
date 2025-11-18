@@ -160,7 +160,7 @@ export default function SkillsSection({
 
   return (
     <Section id="skills">
-      <div className={`mx-auto w-full ${wrapper} mb-50 px-6 text-center`}>
+      <div className={`mx-auto w-full ${wrapper}  px-6 text-center`}>
         {/* 헤더 */}
         <Reveal
           as="h2"
