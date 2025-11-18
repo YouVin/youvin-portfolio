@@ -2,8 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Reveal from "@/app/components/Reveal";
 import { Section } from "@/app/components/Section";
 import {

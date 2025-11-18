@@ -77,23 +77,23 @@ export default function ProjectsSection() {
       id="projects"
       className="relative isolate overflow-visible bg-transparent my-50"
     >
-      {/* 섹션 전체 틸/코랄 은은 배경 */}
+      {/* 섹션 배경 */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div
           className="
-            absolute -top-32 -left-40 h-104 w-104 rounded-full blur-3xl
+            absolute -top-20 -left-10 h-104 w-104 rounded-full blur-3xl
             bg-[radial-gradient(closest-side,rgba(248,113,113,0.18),transparent_70%)]
           "
         />
         <div
           className="
-            absolute -top-40 -right-40 h-120 w-120 rounded-full blur-3xl
+            absolute -top-20 -right-10 h-120 w-120 rounded-full blur-3xl
             bg-[radial-gradient(closest-side,rgba(45,212,191,0.20),transparent_70%)]
           "
         />
         <div
           className="
-            absolute inset-x-0 top-24 h-[420px]
+            absolute inset-x-0 top-30 h-[420px]
             mask-[linear-gradient(to_bottom,black_35%,transparent)]
             bg-[radial-gradient(900px_320px_at_50%_0%,rgba(236,252,245,0.9)_0%,transparent_70%)]
           "
@@ -122,81 +122,91 @@ export default function ProjectsSection() {
           {PROJECTS.map((project, idx) => (
             <Reveal
               key={project.id}
-              as="article"
+              as="div"
               intensity="soft"
               delay={0.06 * idx}
             >
-              <div
-                className={[
-                  "group relative h-full overflow-hidden rounded-2xl border border-black/5 bg-white/85",
-                  "px-5 py-5 md:px-6 md:py-6",
-                  "shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-sm",
-                  "transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_rgba(15,23,42,0.10)]",
-                ].join(" ")}
-              >
-                {/* 카드 상단 얇은 컬러 스트립 */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-linear-to-r from-rose-200 via-emerald-200 to-sky-200" />
+              {/* 카드 전체를 상세페이지 링크로 */}
+              <Link href={`/projects/${project.id}`} className="group block">
+                <div
+                  className={[
+                    "relative h-full overflow-hidden rounded-2xl border border-black/5 bg-white/85",
+                    "px-5 py-5 md:px-6 md:py-6",
+                    "shadow-[0_18px_40px_rgba(15,23,42,0.06)] backdrop-blur-sm",
+                    "transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:shadow-[0_24px_60px_rgba(15,23,42,0.10)]",
+                  ].join(" ")}
+                >
+                  {/* 카드 상단 얇은 컬러 스트립 */}
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-linear-to-r from-rose-200 via-emerald-200 to-sky-200" />
 
-                {/* 내부 내용 */}
-                <div className="flex flex-col gap-4">
-                  {/* 상단: 로고 + 이름 */}
-                  <div className="flex items-start gap-3">
-                    {project.logoSrc ? (
-                      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.06)]">
-                        <Image
-                          src={project.logoSrc}
-                          alt={project.logoAlt ?? project.name}
-                          fill
-                          sizes="64px"
-                          className="object-contain p-2"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-xs font-semibold text-emerald-700">
-                        {project.name[0]}
-                      </div>
-                    )}
+                  {/* 내부 내용 */}
+                  <div className="flex flex-col gap-4">
+                    {/* 상단: 로고 + 이름 */}
+                    <div className="flex items-start gap-3">
+                      {project.logoSrc ? (
+                        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.06)]">
+                          <Image
+                            src={project.logoSrc}
+                            alt={project.logoAlt ?? project.name}
+                            fill
+                            sizes="64px"
+                            className="object-contain p-2"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-xs font-semibold text-emerald-700">
+                          {project.name[0]}
+                        </div>
+                      )}
 
-                    <div className="flex-1 text-left">
-                      <h3 className="text-sm font-semibold text-foreground md:text-base">
-                        {project.name}
-                      </h3>
-                      <p className="mt-1 text-[11px] leading-relaxed text-muted md:text-[12px]">
-                        {project.summary}
-                      </p>
+                      <div className="flex-1 text-left">
+                        <h3 className="text-sm font-semibold text-foreground md:text-base">
+                          {project.name}
+                        </h3>
+                        <p className="mt-1 text-[11px] leading-relaxed text-muted md:text-[12px]">
+                          {project.summary}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 기술 스택 뱃지들 */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.techs.map((tech) => (
+                        <span
+                          key={tech}
+                          className="inline-flex items-center rounded-full bg-zinc-50/90 px-2.5 py-1 text-[10px] font-medium text-zinc-600 ring-1 ring-zinc-200 group-hover:bg-zinc-50"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* 푸터: GitHub 버튼 */}
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-[11px] text-zinc-400">
+                        {project.id}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.open(
+                            project.githubUrl,
+                            "_blank",
+                            "noopener,noreferrer"
+                          );
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 px-3 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
+                      >
+                        <FiGithub className="h-4 w-4" />
+                        <span>GitHub</span>
+                      </button>
                     </div>
                   </div>
-
-                  {/* 기술 스택 뱃지들 */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.techs.map((tech) => (
-                      <span
-                        key={tech}
-                        className="inline-flex items-center rounded-full bg-zinc-50/90 px-2.5 py-1 text-[10px] font-medium text-zinc-600 ring-1 ring-zinc-200 group-hover:bg-zinc-50"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* 푸터: GitHub 링크 */}
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-[11px] text-zinc-400">
-                      {project.id}
-                    </span>
-
-                    <Link
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 px-3 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
-                    >
-                      <FiGithub className="h-4 w-4" />
-                      <span>GitHub</span>
-                    </Link>
-                  </div>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

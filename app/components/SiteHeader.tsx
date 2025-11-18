@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, MouseEvent } from "react";
 import Reveal from "@/app/components/Reveal";
 
@@ -23,7 +23,6 @@ export default function SiteHeader({
   topClass = "top-6",
 }: Props) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const [stuck, setStuck] = useState(false);
   const [spacerH, setSpacerH] = useState(0);
@@ -55,11 +54,6 @@ export default function SiteHeader({
         top: targetY,
         behavior: "smooth",
       });
-    } else {
-      // 홈이 아닐 때는 /#skills 로 이동
-      // (Link의 기본 동작 그대로 두고 싶으면 이 부분은 비워두면 됨)
-      // e.preventDefault();
-      // router.push(item.href);
     }
   };
 
@@ -104,7 +98,7 @@ export default function SiteHeader({
       as="nav"
       intensity="soft"
       delay={0.06}
-      className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"
+      className="flex items-center justify-between px-4 py-3"
     >
       <Link
         href="/"

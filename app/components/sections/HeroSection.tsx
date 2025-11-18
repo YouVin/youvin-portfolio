@@ -92,10 +92,6 @@ export default function HeroSection() {
             이력서 보기
           </Link>
         </Reveal>
-        {/* 도킹 헤더 */}
-        <div className="mt-20">
-          <SiteHeader dock topClass="top-6" />
-        </div>
       </div>
     </Section>
   );
