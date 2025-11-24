@@ -72,16 +72,16 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/YouVin",
     thumbnail: "/images/arcade.png",
-    heroImage: "/images/7zzang-hero.jpg",
+    heroImage: "/images/7zzang-hero.png",
 
     previewImages: [
       {
-        src: "/images/7zzang-main-preview.jpg",
+        src: "/images/7zzang-main-preview.png",
         caption: "7짱 오락실 메인 화면 – 코인 슬롯과 게임 선택 UI",
       },
       {
-        src: "/images/7space-gameplay.jpg",
-        caption: "제7우주 플레이 화면 – 적 웨이브와 보스 페이즈",
+        src: "/images/7space-gameplay.png",
+        caption: "제7우주 플레이 화면",
       },
     ],
 
@@ -89,26 +89,27 @@ export const projects: Project[] = [
       {
         title: "반응형 일러스트 스케일링 줌 인터랙션",
         body:
-          "5200×2600 원본 일러스트를 뷰포트 비율에 맞춰 실시간 스케일링하는 로직을 구현했습니다.\n" +
-          "코인 투입 시 scale(1)로 자연스럽게 확대되도록 만들어 오락기 앞에 다가가는 인터랙션을 구성했습니다.\n" +
-          "바깥 영역 클릭 시 스케일을 자동 복구해 공간형 UX를 유지했습니다.",
+          "1. 5200×2600 원본 일러스트를 뷰포트 비율에 맞춰\n 실시간 스케일링하는 로직을 구현했습니다.\n\n" +
+          "2. 코인 투입 시 scale로 자연스럽게 확대하여\n 오락기 앞에 다가가는 인터랙션을 구성했습니다.\n\n" +
+          "3. 바깥 영역 클릭 시 스케일을 자동 복구해 공간형 UX를 유지했습니다.",
         layout: "multi-vertical",
         video: "/images/7zzang-main.mp4",
       },
       {
         title: "SAT.js 충돌 판정 최적화",
         body:
-          "SAT.js 기반 다각형 충돌 판정으로 탄환·적·보스의 히트 정확도를 높였습니다.\n" +
-          "Set 구조로 중복 충돌을 한 프레임 안에서 효율적으로 관리했습니다.",
+          "SAT.js 충돌 판정, 탄환·적·보스의 히트 정확도를 높였습니다.\n" +
+          "Set 구조로 중복 충돌을 한 프레임 안에서 관리했습니다.",
         layout: "single-horizontal",
         images: ["/images/7space-collision.png"],
       },
       {
-        title: "웨이브 → 보스 페이즈 전환 전투 구조",
+        title: "Config 기반 웨이브 생성 + 라운드/보스 전환",
         body:
-          "rows/cols/padding 기반 웨이브 템플릿으로 단계별 난이도와 패턴을 구성했습니다.\n" +
-          "좌우 벽 충돌 예측 후 배열 방향을 전환하고 Y축 낙하 패턴을 구성했습니다.\n" +
-          "웨이브 클리어 후 페이즈 전환으로 보스전까지 자연스럽게 연결했습니다.",
+          "rows·cols·padding 값으로 웨이브를 자동 생성합니다.\n" +
+          "적 배열의 다음 이동을 예측해 벽 충돌 전 방향을 전환합니다.\n" +
+          "웨이브 종료 시 보너스를 지급하고 탄환·이펙트를 정리합니다.\n" +
+          "전환 후 전용 BGM과 패턴을 가진 보스전으로 이어집니다.",
         layout: "single-horizontal",
         images: ["/images/7space-boss.png"],
       },
@@ -116,7 +117,7 @@ export const projects: Project[] = [
         title: "Canvas 기반 UX 연출(무적·폭발·HUD·DevMode)",
         body:
           "글로벌 alpha 토글로 무적 깜빡임 효과를 구현했습니다.\n" +
-          "HUD 요소를 단일 렌더 루프에서 처리해 일관된 UI를 유지했습니다.",
+          "HUD 요소를 단일 렌더 루프에서 처리해 UI를 유지했습니다.",
         layout: "single-horizontal",
         images: ["/images/7space-effects.png"],
       },
@@ -205,7 +206,7 @@ export const projects: Project[] = [
       {
         title: "상태 관리 (GetX) & 위젯 구조",
         body:
-          "피드·댓글·대댓글·좋아요 상태를 GetX 컨트롤러로 분리했습니다.\n" +
+          "피드·댓글·대댓글·좋아요 상태를 GetX 컨트롤러로 분리 후\n" +
           "UI는 Dumb 위젯으로 구성해 로직을 완전히 분리하고,\n 불필요한 렌더링을 최소화했습니다.\n" +
           "상태 흐름을 명확히 추적할 수 있도록 구조를 단순화했습니다.",
         layout: "single-vertical",

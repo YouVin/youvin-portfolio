@@ -95,14 +95,23 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </div>
 
         <div
-          className={`md:w-1/2 md:max-w-xl space-y-2 ${
-            isReverse ? "text-center md:text-right" : "text-center md:text-left"
+          className={`md:w-[42%] md:max-w-[460px] space-y-3 md:space-y-4 ${
+            isReverse
+              ? "text-center md:text-right md:ml-auto"
+              : "text-center md:text-left"
           }`}
         >
-          <h3 className="text-xl font-semibold text-neutral-900">
+          <h3 className="text-lg md:text-xl font-semibold tracking-tight text-neutral-900">
             {section.title}
           </h3>
-          <p className="text-neutral-600 text-sm leading-relaxed whitespace-pre-line">
+          <p
+            className="
+            text-[13px] md:text-[15px]
+            text-neutral-600
+            leading-7 md:leading-8
+            whitespace-pre-line
+          "
+          >
             {section.body}
           </p>
         </div>
@@ -154,14 +163,23 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
         {/* 텍스트 */}
         <div
-          className={`md:w-1/2 md:max-w-xl space-y-2 ${
-            isReverse ? "text-center md:text-right" : "text-center md:text-left"
+          className={`md:w-[42%] md:max-w-[460px] space-y-3 md:space-y-4 ${
+            isReverse
+              ? "text-center md:text-right md:ml-auto"
+              : "text-center md:text-left"
           }`}
         >
-          <h3 className="text-xl font-semibold text-neutral-900">
+          <h3 className="text-lg md:text-xl font-semibold tracking-tight text-neutral-900">
             {section.title}
           </h3>
-          <p className="text-neutral-600 text-sm leading-relaxed whitespace-pre-line">
+          <p
+            className="
+            text-[13px] md:text-[15px]
+            text-neutral-600
+            leading-7 md:leading-8
+            whitespace-pre-line
+          "
+          >
             {section.body}
           </p>
         </div>
