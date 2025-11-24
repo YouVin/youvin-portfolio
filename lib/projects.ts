@@ -19,13 +19,14 @@ export type Project = {
   techSections?: TechSection[];
 };
 
-// 새 타입
+// ── TechSection 타입 (video 지원 버전) ─────────────────
 export type TechSection = {
   title: string;
   body: string;
   // "single-vertical" | "single-horizontal" | "multi-vertical"
   layout: "single-vertical" | "single-horizontal" | "multi-vertical";
-  images: string[]; // 한 장만 필요해도 배열로
+  images?: string[]; // 필요하면 쓰는 옵션
+  video?: string; // mp4 넣을 때 사용
 };
 
 export const projects: Project[] = [
@@ -47,28 +48,79 @@ export const projects: Project[] = [
       "주문/결제 페이지 구조화 (서버/클라이언트 컴포넌트 분리)",
       "Tailwind 기반 공통 UI 컴포넌트 정리",
     ],
-    github: "https://github.com/YouVin", // TODO: 실제 도토리섬 repo로 교체
-    demo: "", // 배포 URL 있으면 넣기
+    github: "https://github.com/YouVin",
+    demo: "",
     thumbnail: "/images/dotori.png",
   },
   {
     slug: "7zzang-arcade",
     title: "7짱 오락실",
     period: "2025.05",
-    stack: ["JavaScript", "HTML", "CSS"],
+    stack: ["TypeScript", "Canvas", "Firebase", "SAT.js", "HTML", "CSS"],
     summary:
-      "순수 JS로 만든 미니 게임 아케이드 컬렉션. 이벤트 처리와 상태 관리 중심으로 개발.",
+      "순수 TS/Canvas로 만든 미니 게임 아케이드 컬렉션. 메인 오락기 화면과 개별 게임을 하나의 경험처럼 엮는 데 집중했습니다.",
     description: [
       "7짱 오락실은 여러 개의 미니 게임을 하나의 웹 아케이드처럼 묶어둔 프로젝트입니다.",
-      "각 게임은 순수 JavaScript만으로 상태 업데이트, 충돌 판정, 점수 계산 등을 구현했고, 팀 단위 협업으로 브랜치 전략과 병합 흐름을 실제처럼 경험했습니다.",
+      "각 게임은 TypeScript와 Canvas API만으로 상태 업데이트, 충돌 판정, 점수 계산 등을 구현했고, 공통으로 사용하는 BGM, 점수 저장 구조를 설계해 일관된 UX를 만들었습니다.",
+      "그 중 ‘제7우주(The Seventh Space)’는 직접 설계한 탄막 구조, 보스 페이즈, 폭발 이펙트까지 포함한 스페이스 슈팅 게임입니다.",
     ],
     role: [
-      "게임 로직(상태 업데이트 / 이벤트 핸들링) 구현",
-      "Git 브랜치 전략으로 협업 (기능 브랜치 → main 머지)",
-      "UI/UX 디테일 개선",
+      "메인 오락기 화면(게임 선택, 코인 애니메이션, BGM 토글) 구현",
+      "제7우주 게임 전체 로직 (상태 업데이트 / 충돌 판정 / 점수 시스템) 개발",
+      "Firestore 기반 하이스코어 저장 & 리더보드 UI 구현",
+      "Canvas 이펙트(폭발, 배경 스크롤, 라이프/스코어 HUD) 연출 설계",
     ],
-    github: "https://github.com/YouVin", // TODO: 실제 7짱 레포 링크로 바꿀 것
+    github: "https://github.com/YouVin",
     thumbnail: "/images/arcade.png",
+    heroImage: "/images/7zzang-hero.jpg",
+
+    previewImages: [
+      {
+        src: "/images/7zzang-main-preview.jpg",
+        caption: "7짱 오락실 메인 화면 – 코인 슬롯과 게임 선택 UI",
+      },
+      {
+        src: "/images/7space-gameplay.jpg",
+        caption: "제7우주 플레이 화면 – 적 웨이브와 보스 페이즈",
+      },
+    ],
+
+    techSections: [
+      {
+        title: "반응형 일러스트 스케일링 줌 인터랙션",
+        body:
+          "5200×2600 원본 일러스트를 뷰포트 비율에 맞춰 실시간 스케일링하는 로직을 구현했습니다.\n" +
+          "코인 투입 시 scale(1)로 자연스럽게 확대되도록 만들어 오락기 앞에 다가가는 인터랙션을 구성했습니다.\n" +
+          "바깥 영역 클릭 시 스케일을 자동 복구해 공간형 UX를 유지했습니다.",
+        layout: "multi-vertical",
+        video: "/images/7zzang-main.mp4",
+      },
+      {
+        title: "SAT.js 충돌 판정 최적화",
+        body:
+          "SAT.js 기반 다각형 충돌 판정으로 탄환·적·보스의 히트 정확도를 높였습니다.\n" +
+          "Set 구조로 중복 충돌을 한 프레임 안에서 효율적으로 관리했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/7space-collision.png"],
+      },
+      {
+        title: "웨이브 → 보스 페이즈 전환 전투 구조",
+        body:
+          "rows/cols/padding 기반 웨이브 템플릿으로 단계별 난이도와 패턴을 구성했습니다.\n" +
+          "좌우 벽 충돌 예측 후 배열 방향을 전환하고 Y축 낙하 패턴을 구성했습니다.\n" +
+          "웨이브 클리어 후 페이즈 전환으로 보스전까지 자연스럽게 연결했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/7space-boss.png"],
+      },
+      {
+        title: "Canvas 기반 UX 연출(무적·폭발·HUD·DevMode)",
+        body:
+          "글로벌 alpha 토글로 무적 깜빡임 효과를 구현했습니다.\n" +
+          "HUD 요소를 단일 렌더 루프에서 처리해 일관된 UI를 유지했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/7space-effects.png"],
+      },
+    ],
   },
   {
     slug: "burgerking-clone",

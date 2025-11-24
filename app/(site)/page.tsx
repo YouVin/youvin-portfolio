@@ -9,7 +9,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       <HeroSection />
 
-      <div className="mx-auto max-w-md px-6 -mt-80 mb-120">
+      <div className="mx-auto max-w-md px-6 -mt-[22vh] md:-mt-[20vh] lg:-mt-[18vh] mb-[12vh]">
         <SiteHeader dock topClass="top-6" />
       </div>
 

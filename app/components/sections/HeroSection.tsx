@@ -79,16 +79,10 @@ export default function HeroSection() {
           className="mt-8 flex justify-center gap-2.5"
         >
           <Link
-            href="/projects"
-            className="rounded-full border border-foreground/80 bg-foreground text-background px-3.5 py-1.5 text-sm md:text-base font-semibold hover:opacity-90 transition"
-          >
-            프로젝트 보기
-          </Link>
-          <Link
             href="/about"
             className="rounded-full border border-foreground/30 px-3.5 py-1.5 text-sm md:text-base font-semibold text-foreground hover:bg-secondary/50 transition"
           >
-            이력서 보기
+            이력서 다운로드
           </Link>
         </Reveal>
       </div>

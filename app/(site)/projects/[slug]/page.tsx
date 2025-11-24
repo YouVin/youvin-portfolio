@@ -1,6 +1,16 @@
+// app/projects/[slug]/page.tsx
+
 import { getProjectBySlug } from "@/lib/projects";
 import Link from "next/link";
 import Image from "next/image";
+
+type TechSection = {
+  title: string;
+  body: string;
+  layout: "single-vertical" | "single-horizontal" | "multi-vertical";
+  images?: string[];
+  video?: string;
+};
 
 type ProjectPageProps = {
   params: Promise<{
@@ -28,54 +38,21 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
+  // 공통 폰 프레임 스타일
   const PHONE_SIZE = "w-[200px] h-[380px] md:w-[200px] md:h-[380px]";
   const PHONE_FRAME =
     "relative rounded-[28px] border border-neutral-200 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.06)]";
   const PHONE_IMG = "object-contain bg-white p-3 md:p-4";
 
-  function renderSectionImage(section: {
-    layout: "single-vertical" | "single-horizontal" | "multi-vertical";
-    images: string[];
-    title: string;
-    align?: "left" | "right";
-  }) {
-    // 공통 단일 카드
-    const singleCard = (
-      <div className={`${PHONE_FRAME} ${PHONE_SIZE}`}>
-        <Image
-          src={section.images[0]}
-          alt={section.title}
-          fill
-          className={PHONE_IMG}
-        />
-      </div>
-    );
-
-    if (section.layout === "single-vertical") {
-      return (
-        <div className="flex justify-center items-center md:w-1/2">
-          {singleCard}
-        </div>
-      );
-    }
-
-    if (section.layout === "single-horizontal") {
-      return (
-        <div className="flex justify-center items-center md:w-1/2">
-          {singleCard}
-        </div>
-      );
-    }
-    return null;
-  }
-
+  // ------------------------------------------------------------------
+  // 3장 세로 배열 (multi-vertical)
+  // ------------------------------------------------------------------
   function renderStage(images: string[], title: string) {
     return (
       <div
         className="flex justify-center items-start gap-6 md:gap-10
                     mb-12 md:mb-20 pb-6 md:pb-12"
       >
-        {" "}
         {images.map((imgSrc, i) => (
           <figure
             key={i}
@@ -96,6 +73,105 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
+  // ------------------------------------------------------------------
+  // single-vertical : 폰 프레임 + 텍스트
+  // ------------------------------------------------------------------
+  function renderVerticalSection(section: TechSection, idx: number) {
+    const src = section.images?.[0];
+    if (!src) return null;
+
+    const isReverse = idx % 2 === 1;
+
+    return (
+      <div
+        className={`flex flex-col md:flex-row gap-12 ${
+          isReverse ? "md:flex-row-reverse" : ""
+        } items-center md:items-start`}
+      >
+        <div className="flex justify-center items-center md:w-1/2">
+          <div className={`${PHONE_FRAME} ${PHONE_SIZE}`}>
+            <Image src={src} alt={section.title} fill className={PHONE_IMG} />
+          </div>
+        </div>
+
+        <div
+          className={`md:w-1/2 md:max-w-xl space-y-2 ${
+            isReverse ? "text-center md:text-right" : "text-center md:text-left"
+          }`}
+        >
+          <h3 className="text-xl font-semibold text-neutral-900">
+            {section.title}
+          </h3>
+          <p className="text-neutral-600 text-sm leading-relaxed whitespace-pre-line">
+            {section.body}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------------
+  // single-horizontal : 가로형 캡처/영상 + 텍스트
+  // ------------------------------------------------------------------
+  function renderHorizontalSection(section: TechSection, idx: number) {
+    const src = section.video ?? section.images?.[0];
+    if (!src) return null;
+
+    const isVideo = !!section.video;
+    const isReverse = idx % 2 === 1;
+    const mediaJustify = isReverse ? "md:justify-start" : "md:justify-end";
+
+    const media = isVideo ? (
+      <video
+        src={src}
+        className="w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+    ) : (
+      <Image
+        src={src}
+        alt={section.title}
+        fill
+        className="w-full h-full object-cover"
+      />
+    );
+
+    return (
+      <div
+        className={`flex flex-col md:flex-row gap-12 ${
+          isReverse ? "md:flex-row-reverse" : ""
+        } items-center md:items-start`}
+      >
+        {/* 이미지 / 영상 : 좌우 번갈아 배치 */}
+        <div className={`flex items-center md:w-1/2 ${mediaJustify}`}>
+          <div className="relative w-full max-w-3xl aspect-4/3 rounded-2xl overflow-hidden border border-neutral-200 bg-black shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+            {media}
+          </div>
+        </div>
+
+        {/* 텍스트 */}
+        <div
+          className={`md:w-1/2 md:max-w-xl space-y-2 ${
+            isReverse ? "text-center md:text-right" : "text-center md:text-left"
+          }`}
+        >
+          <h3 className="text-xl font-semibold text-neutral-900">
+            {section.title}
+          </h3>
+          <p className="text-neutral-600 text-sm leading-relaxed whitespace-pre-line">
+            {section.body}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ------------------------------------------------------------------
+  // 렌더링 본문
+  // ------------------------------------------------------------------
   return (
     <section className="space-y-20 px-4 sm:px-6 lg:px-10">
       {/* HERO */}
@@ -111,8 +187,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               priority
             />
 
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-
+            <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/30 to-transparent" />
             <div className="absolute left-4 top-4 md:left-6 md:top-6 max-w-[680px]">
               <div className="backdrop-blur-md bg-white/20 border border-white/30 text-white rounded-2xl p-4 md:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] space-y-3">
                 <div className="flex items-baseline justify-between gap-3">
@@ -182,65 +257,71 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             기술 하이라이트
           </h2>
 
-          {project.techSections.map((section, idx) => {
+          {project.techSections.map((section: TechSection, idx) => {
             const imgCount = section.images?.filter(Boolean)?.length ?? 0;
-            const isStage = section.layout === "multi-vertical" && imgCount > 1;
-            if (isStage) {
-              return (
-                <div key={idx} className="space-y-6 md:space-y-10">
-                  <div
-                    className="
-          flex flex-col items-center text-center
-          md:flex-row md:items-start md:justify-between md:text-left md:gap-24
-        "
-                  >
-                    <h3
-                      className="
-            text-xl font-semibold text-neutral-900
-            md:w-[32%] md:shrink-0 md:pr-8
-          "
-                    >
-                      {section.title}
-                    </h3>
-                    <p
-                      className="
-            text-neutral-600 text-sm leading-7 whitespace-pre-line
-            md:w-[68%] md:pl-4
-          "
-                    >
-                      {section.body}
-                    </p>
-                  </div>
 
-                  {renderStage(section.images, section.title)}
-                </div>
+            // 1) multi-vertical
+            if (section.layout === "multi-vertical") {
+              if (section.video) {
+                return (
+                  <div key={idx} className="space-y-6 md:space-y-10">
+                    <div className="flex flex-col items-center text-center md:flex-row md:items-start md:justify-between md:text-left md:gap-24">
+                      <h3 className="text-xl font-semibold text-neutral-900 md:w-[32%] md:shrink-0 md:pr-8">
+                        {section.title}
+                      </h3>
+                      <p className="text-neutral-600 text-sm leading-7 whitespace-pre-line md:w-[68%] md:pl-4">
+                        {section.body}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-center items-center mb-12 md:mb-20 pb-6 md:pb-12">
+                      <div className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden border border-neutral-200 bg-black shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+                        <video
+                          src={section.video}
+                          className="w-full h-full object-cover"
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              // 1-2. 이미지 3장 스테이지
+              if (imgCount > 1) {
+                return (
+                  <div key={idx} className="space-y-6 md:space-y-10">
+                    <div className="flex flex-col items-center text-center md:flex-row md:items-start md:justify-between md:text-left md:gap-24">
+                      <h3 className="text-xl font-semibold text-neutral-900 md:w-[32%] md:shrink-0 md:pr-8">
+                        {section.title}
+                      </h3>
+                      <p className="text-neutral-600 text-sm leading-7 whitespace-pre-line md:w-[68%] md:pl-4">
+                        {section.body}
+                      </p>
+                    </div>
+
+                    {renderStage(section.images!, section.title)}
+                  </div>
+                );
+              }
+            }
+
+            // 2) single-vertical
+            if (section.layout === "single-vertical") {
+              return <div key={idx}>{renderVerticalSection(section, idx)}</div>;
+            }
+
+            // 3) single-horizontal
+            if (section.layout === "single-horizontal") {
+              return (
+                <div key={idx}>{renderHorizontalSection(section, idx)}</div>
               );
             }
 
-            return (
-              <div
-                key={idx}
-                className={`flex flex-col md:flex-row gap-12 ${
-                  idx % 2 === 1 ? "md:flex-row-reverse" : ""
-                } items-center md:items-start`}
-              >
-                {renderSectionImage(section)}
-                <div
-                  className={`md:w-[45%] md:max-w-[400px] space-y-2 ${
-                    idx % 2 === 1
-                      ? "text-center md:text-right"
-                      : "text-center md:text-left"
-                  }`}
-                >
-                  <h3 className="text-xl font-semibold text-neutral-900">
-                    {section.title}
-                  </h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed tracking-normal whitespace-pre-line">
-                    {section.body}
-                  </p>
-                </div>
-              </div>
-            );
+            return null;
           })}
         </section>
       ) : null}
