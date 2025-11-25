@@ -254,7 +254,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                   )}
 
                   <Link
-                    href="/projects"
+                    href="/"
                     className="inline-flex items-center gap-1 rounded-lg border border-white/40 bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition"
                   >
                     ← Back to Projects

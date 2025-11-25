@@ -48,10 +48,50 @@ export const projects: Project[] = [
       "주문/결제 페이지 구조화 (서버/클라이언트 컴포넌트 분리)",
       "Tailwind 기반 공통 UI 컴포넌트 정리",
     ],
-    github: "https://github.com/YouVin",
-    demo: "",
-    thumbnail: "/images/dotori.png",
+    github: "https://github.com/YouVin/Final-10-console.10g",
+    thumbnail: "",
+    heroImage: "/images/dotori.png",
+
+    techSections: [
+      {
+        title: "옵티미스틱 장바구니 수량 변경",
+        body:
+          "PATCH → GET 재조회까지 기다리던 기존 수량 변경 흐름을 옵티미스틱 UI로 전환했습니다.\n" +
+          "버튼 클릭 시 즉시 Zustand 스토어의 수량을 올리고, 서버 요청은 백그라운드에서 처리합니다.\n" +
+          "요청 실패 시에는 이전 수량으로 롤백해 UI와 서버 상태를 다시 맞춰줍니다.",
+        layout: "multi-vertical",
+        video: "/videos/dotori-cart-optimistic.mp4",
+      },
+      {
+        title: "디바운싱 기반 PATCH 호출 최소화",
+        body:
+          "사용자가 수량 버튼을 여러 번 빠르게 눌러도 마지막 입력만 서버에 반영되도록 디바운싱을 적용했습니다.\n" +
+          "상품별 타이머를 관리해 300ms 안의 중복 입력은 모두 취소하고 한 번의 PATCH만 전송합니다.\n" +
+          "이 덕분에 장바구니 수량 변경이 부드럽게 보이면서도 서버 부하를 줄였습니다.",
+        layout: "single-horizontal",
+        images: ["/images/dotori-cart-debounce.png"],
+      },
+      {
+        title: "useMemo로 합계 계산 캐싱",
+        body:
+          "선택된 상품 목록과 수량, 배송비만 의존성으로 두고 useMemo로 총 금액을 계산했습니다.\n" +
+          "변경이 없는 렌더에서는 이전 계산 결과를 재사용해 불필요한 reduce 연산을 막았습니다.\n" +
+          "향후 쿠폰·프로모션 규칙이 추가되더라도 동일한 패턴으로 확장 가능하게 설계했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/dotori-cart-total.png"],
+      },
+      {
+        title: "Zustand 부분 구독 + Row 단위 렌더링",
+        body:
+          "장바구니 부모는 전체 quantities 대신 합계에 필요한 최소 상태만 구독하도록 분리했습니다.\n" +
+          "각 CartItem 컴포넌트는 selector로 자신의 id에 해당하는 수량만 구독하고, React.memo로 감쌌습니다.\n" +
+          "그 결과 한 상품의 수량을 바꿔도 해당 Row와 합계 영역만 다시 렌더링되도록 최적화했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/dotori-cart-row.png"],
+      },
+    ],
   },
+
   {
     slug: "7zzang-arcade",
     title: "7짱 오락실",
@@ -70,7 +110,7 @@ export const projects: Project[] = [
       "Firestore 기반 하이스코어 저장 & 리더보드 UI 구현",
       "Canvas 이펙트(폭발, 배경 스크롤, 라이프/스코어 HUD) 연출 설계",
     ],
-    github: "https://github.com/YouVin",
+    github: "https://github.com/YouVin/JS-07-7zzang-Arcade",
     thumbnail: "/images/arcade.png",
     heroImage: "/images/7zzang-hero.png",
 
@@ -124,25 +164,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "burgerking-clone",
-    title: "버거킹 클론 랜딩",
-    period: "2025.04",
-    stack: ["HTML", "CSS", "Responsive Layout"],
-    summary:
-      "실제 브랜드의 랜딩 페이지를 시맨틱 마크업과 반응형 레이아웃으로 재현.",
-    description: [
-      "버거킹 웹 페이지 레이아웃을 분석하고, HTML 시맨틱 태그와 CSS만으로 반응형 구조를 재현했습니다.",
-      "특히 헤더/내비 영역과 프로모션 카드 섹션의 반응형 동작을 중심으로 '디자인 → 코드' 전환 능력을 보여주는 프로젝트입니다.",
-    ],
-    role: [
-      "시맨틱 HTML 마크업 작성",
-      "모바일/데스크톱 반응형 레이아웃 구현",
-      "공통 컴포넌트화 가능한 CSS 패턴 정리",
-    ],
-    github: "https://github.com/YouVin",
-    thumbnail: "/images/burgerking.png",
-  },
-  {
     slug: "greeni",
     title: "그리니 (Greeni)",
     period: "2025.03",
@@ -156,7 +177,7 @@ export const projects: Project[] = [
       "핵심 화면 레이아웃/내비게이션 구조 설계",
       "주요 상태 흐름(입력 → 반영) 구성",
     ],
-    github: "https://github.com/YouVin",
+    github: "https://github.com/YouVin/greenie",
     thumbnail: "/images/greeni.png",
   },
   {
