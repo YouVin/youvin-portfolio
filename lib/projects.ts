@@ -108,7 +108,7 @@ export const projects: Project[] = [
       "메인 오락기 화면(게임 선택, 코인 애니메이션, BGM 토글) 구현",
       "제7우주 게임 전체 로직 (상태 업데이트 / 충돌 판정 / 점수 시스템) 개발",
       "Firestore 기반 하이스코어 저장 & 리더보드 UI 구현",
-      "Canvas 이펙트(폭발, 배경 스크롤, 라이프/스코어 HUD) 연출 설계",
+      "Canvas (폭발, 배경 스크롤, 라이프/스코어 HUD) 연출 설계",
     ],
     github: "https://github.com/YouVin/JS-07-7zzang-Arcade",
     thumbnail: "/images/arcade.png",
@@ -144,7 +144,7 @@ export const projects: Project[] = [
         images: ["/images/7space-collision.png"],
       },
       {
-        title: "Config 기반 웨이브 생성 + 라운드/보스 전환",
+        title: "Config 기반 웨이브 생성, 라운드/보스 전환",
         body:
           "rows·cols·padding 값으로 웨이브를 자동 생성합니다.\n" +
           "적 배열의 다음 이동을 예측해 벽 충돌 전 방향을 전환합니다.\n" +
@@ -154,7 +154,7 @@ export const projects: Project[] = [
         images: ["/images/7space-boss.png"],
       },
       {
-        title: "Canvas 기반 UX 연출(무적·폭발·HUD·DevMode)",
+        title: "Canvas 기반 UX 연출",
         body:
           "글로벌 alpha 토글로 무적 깜빡임 효과를 구현했습니다.\n" +
           "HUD 요소를 단일 렌더 루프에서 처리해 UI를 유지했습니다.",
@@ -164,21 +164,79 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "greeni",
+    slug: "greenie",
     title: "그리니 (Greeni)",
     period: "2025.03",
-    stack: ["Vue"],
+    stack: ["Vue 3", "Quasar", "TypeScript"],
     summary:
-      "식물/친환경 컨셉의 서비스 프로토타입. Vue 기반으로 주요 화면과 상태 흐름을 설계.",
+      "커뮤니티 기능 중심의 Vue 프로젝트. 게시글 피드 정렬, 페이지네이션, 댓글·대댓글 구조를 직접 설계하고 구현했습니다.",
+
     description: [
-      "그리니는 친환경/식물 테마의 서비스로, Vue 기반 SPA 아키텍처를 사용해 화면 간 라우팅과 상태 변경 흐름을 설계했습니다.",
+      "그리니는 친환경·식물 콘셉트의 커뮤니티 서비스로, Vue + Quasar 기반으로 제작한 프로젝트입니다.",
+      "특히 ‘커뮤니티 피드’와 ‘댓글/대댓글 시스템’ 전체를 직접 설계·구현해, 화면 구성부터 사용자 흐름 개선까지 경험한 프로젝트입니다.",
     ],
+
     role: [
-      "핵심 화면 레이아웃/내비게이션 구조 설계",
-      "주요 상태 흐름(입력 → 반영) 구성",
+      "정렬(추천순/최신순)과 페이지네이션이 있는 커뮤니티 피드 개발",
+      "카드형 게시글 목록 디자인 및 반응형 UI 설계",
+      "댓글/대댓글(계층형 스레드) 구조 설계 및 렌더링 로직 구현",
+      "댓글 좋아요·답글 토글 등 사용자 인터랙션 개발",
+      "‘xx분 전/xx시간 전’ 같은 통일된 시간 표시 유틸 작성",
     ],
+
     github: "https://github.com/YouVin/greenie",
     thumbnail: "/images/greeni.png",
+
+    heroImage: "/images/greeni-hero.png",
+
+    previewImages: [
+      {
+        src: "/images/greeni-feed.png",
+        caption: "게시글 피드 – 추천순/최신순 정렬과 카드형 리스트",
+      },
+      {
+        src: "/images/greeni-comments.png",
+        caption: "댓글/대댓글 구조 – 들여쓰기 기반 스레드 UI",
+      },
+    ],
+
+    techSections: [
+      {
+        title: "추천순·최신순으로 정렬되는 커뮤니티 피드",
+        body:
+          "추천순에서는 좋아요 많은 글이 먼저 보이고,\n 최신순에서는 새 글이 바로 보이도록 설계했습니다.\n\n" +
+          "정렬 기준 변경 시 즉시 UI가 반응하도록 탭과 API 정렬 옵션을 함께 구성했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/greeni-feed-sort.png"],
+      },
+
+      {
+        title: "카드형 게시글 목록 + 페이지네이션",
+        body:
+          "모바일에서도 레이아웃이 자연스럽게 정렬되도록\n 반응형으로 구성했습니다.\n\n" +
+          "페이지 이동 시 현재 페이지 상태를 유지하며\n 서버에서 필요한 부분만 가져오도록 했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/greeni-feed-pagination.png"],
+      },
+
+      {
+        title: "댓글·대댓글(스레드) 구조 직접 설계",
+        body:
+          "댓글은 부모 댓글 → 그 아래 대댓글 형태로\n 직접 구조를 만들었습니다.\n\n" +
+          "댓글은 parentId로 묶고, 같은 그룹의 댓글끼리는\n 시간 순으로 정렬했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/greeni-comment-thread.png"],
+      },
+
+      {
+        title: "좋아요·답글·시간 표시 등 사용자 경험 개선",
+        body:
+          "댓글 좋아요 상태를 빠르게 토글할 수 있도록\n Set 기반 구조로 처리했습니다.\n\n" +
+          "‘답글 쓰기’ 버튼을 누르면 해당 댓글 바로 아래\n 입력창이 열리도록 UX를 구성했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/greeni-comment-interaction.png"],
+      },
+    ],
   },
   {
     slug: "today-keyword",
