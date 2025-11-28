@@ -1,13 +1,11 @@
-// lib/projects.ts
-
 export type Project = {
   slug: string;
   title: string;
   period: string;
   stack: string[];
   summary: string;
-  description?: string[]; // ← optional
-  role?: string[]; // ← optional
+  description?: string[];
+  role?: string[];
   github: string;
   demo?: string;
   thumbnail?: string;
@@ -19,14 +17,23 @@ export type Project = {
   techSections?: TechSection[];
 };
 
-// ── TechSection 타입 (video 지원 버전) ─────────────────
 export type TechSection = {
   title: string;
-  body: string;
-  // "single-vertical" | "single-horizontal" | "multi-vertical"
-  layout: "single-vertical" | "single-horizontal" | "multi-vertical";
-  images?: string[]; // 필요하면 쓰는 옵션
-  video?: string; // mp4 넣을 때 사용
+  body?: string;
+  layout:
+    | "single-vertical"
+    | "single-horizontal"
+    | "multi-vertical"
+    | "problem-solution";
+  images?: string[];
+  video?: string;
+
+  problem?: string;
+  solution?: string;
+  problemImage?: string;
+  solutionImage?: string;
+  problemVideo?: string;
+  solutionVideo?: string;
 };
 
 export const projects: Project[] = [
@@ -54,40 +61,57 @@ export const projects: Project[] = [
 
     techSections: [
       {
-        title: "옵티미스틱 장바구니 수량 변경",
-        body:
-          "PATCH → GET 재조회까지 기다리던 기존 수량 변경 흐름을 옵티미스틱 UI로 전환했습니다.\n" +
-          "버튼 클릭 시 즉시 Zustand 스토어의 수량을 올리고, 서버 요청은 백그라운드에서 처리합니다.\n" +
-          "요청 실패 시에는 이전 수량으로 롤백해 UI와 서버 상태를 다시 맞춰줍니다.",
-        layout: "multi-vertical",
-        video: "/videos/dotori-cart-optimistic.mp4",
+        title: "01 · 옵티미스틱 장바구니 수량 변경",
+        layout: "problem-solution",
+        problem:
+          "사용자가 수량 버튼을 누르면 PATCH → GET 재조회까지 기다린 뒤에야 화면이 반영되어, 최대 약 1초 가까운 반응 지연이 발생했습니다.\n\n" +
+          "- 실제 수량보다 화면 표시가 늦어지는 UI 불일치\n" +
+          "- 전체 Cart를 다시 렌더링해 성능 낭비",
+        problemImage: "/images/dotori-problem-01.png",
+        solution:
+          "버튼 클릭 시 곧바로 Zustand 스토어의 수량을 갱신해 UI가 즉시 변화하도록 만들고, 서버 동기화는 백그라운드 PATCH 요청으로 처리했습니다.\n\n" +
+          "- 응답 전에 바로 수량 반영 → 체감 반응 속도 0초\n" +
+          "- 요청 실패 시 이전으로 롤백해 UI와 서버 상태 일치 보장",
+        solutionVideo: "/images/dotori-solution-01.mp4",
       },
       {
-        title: "디바운싱 기반 PATCH 호출 최소화",
-        body:
-          "사용자가 수량 버튼을 여러 번 빠르게 눌러도 마지막 입력만 서버에 반영되도록 디바운싱을 적용했습니다.\n" +
-          "상품별 타이머를 관리해 300ms 안의 중복 입력은 모두 취소하고 한 번의 PATCH만 전송합니다.\n" +
-          "이 덕분에 장바구니 수량 변경이 부드럽게 보이면서도 서버 부하를 줄였습니다.",
-        layout: "single-horizontal",
-        images: ["/images/dotori-cart-debounce.png"],
+        title: "02 · 디바운싱 기반 PATCH 호출 최소화",
+        layout: "problem-solution",
+        problem:
+          "수량 증가 버튼을 빠르게 연속으로 누르면, 클릭 횟수만큼 PATCH 요청이 서버로 전송되는 구조였습니다.\n\n" +
+          "- 동일 상품에 대해 중복 요청 다수 발생\n" +
+          "- 불필요한 트래픽과 서버 부하 증가",
+        problemVideo: "/images/dotori-problem-02.mp4",
+        solution:
+          "상품별로 300ms 디바운스를 적용해, 마지막 입력 이후 추가 클릭이 없을 때만 PATCH를 한 번 보내도록 변경했습니다.\n\n" +
+          "- 10회 클릭 → 실제 서버 전송 1회\n" +
+          "- 불필요한 네트워크 요청 제거로 API 안정성 향상",
+        solutionVideo: "/images/dotori-solution-02.mp4",
       },
       {
-        title: "useMemo로 합계 계산 캐싱",
-        body:
-          "선택된 상품 목록과 수량, 배송비만 의존성으로 두고 useMemo로 총 금액을 계산했습니다.\n" +
-          "변경이 없는 렌더에서는 이전 계산 결과를 재사용해 불필요한 reduce 연산을 막았습니다.\n" +
-          "향후 쿠폰·프로모션 규칙이 추가되더라도 동일한 패턴으로 확장 가능하게 설계했습니다.",
-        layout: "single-horizontal",
-        images: ["/images/dotori-cart-total.png"],
+        title: "03 · useMemo로 합계 계산 캐싱",
+        layout: "problem-solution",
+        problem:
+          "선택된 상품과 수량, 배송비를 기반으로 총 금액을 매번 새로 계산하는 구조라, 장바구니가 커질수록 불필요한 연산 비용이 늘어날 수 있는 상황이었습니다.\n\n" +
+          "- 수량 변경과 직접 관련 없는 렌더에서도 합계를 다시 계산",
+        solution:
+          "선택된 상품 목록, 수량, 배송비만 의존성으로 두고 useMemo로 총 금액을 계산했습니다.\n\n" +
+          "- 의존성이 바뀔 때만 reduce 연산 수행\n" +
+          "- 렌더에서 이전 계산 값을 재사용해 연산 비용 절감",
       },
       {
-        title: "Zustand 부분 구독 + Row 단위 렌더링",
-        body:
-          "장바구니 부모는 전체 quantities 대신 합계에 필요한 최소 상태만 구독하도록 분리했습니다.\n" +
-          "각 CartItem 컴포넌트는 selector로 자신의 id에 해당하는 수량만 구독하고, React.memo로 감쌌습니다.\n" +
-          "그 결과 한 상품의 수량을 바꿔도 해당 Row와 합계 영역만 다시 렌더링되도록 최적화했습니다.",
-        layout: "single-horizontal",
-        images: ["/images/dotori-cart-row.png"],
+        title: "04 · Zustand 부분 구독 + Row 단위 렌더링",
+        layout: "problem-solution",
+        problem:
+          "단일 상품 수량만 변경되어도 Cart 전체가 다시 렌더링되는 구조였습니다.\n\n" +
+          "- 부모 컴포넌트가 quantities 전체를 구독\n" +
+          "- 합계 계산도 부모에서 처리해 영향 범위가 커짐",
+        problemImage: "/images/dotori-problem-04.png",
+        solution:
+          "장바구니 부모는 합계에 필요한 최소 상태만 구독하도록 분리하여 구독하도록 만들었습니다.\n\n" +
+          "- CartItem: React.memo 적용\n" +
+          "- CartSummary: 합계 계산 전담 컴포넌트로 분리",
+        solutionImage: "/images/dotori-solution-04.png",
       },
     ],
   },

@@ -3,19 +3,22 @@
 import { getProjectBySlug } from "@/lib/projects";
 import Link from "next/link";
 import Image from "next/image";
-
-type TechSection = {
-  title: string;
-  body: string;
-  layout: "single-vertical" | "single-horizontal" | "multi-vertical";
-  images?: string[];
-  video?: string;
-};
+import type { TechSection } from "@/lib/projects";
 
 type ProjectPageProps = {
   params: Promise<{
     slug: string;
   }>;
+};
+
+type ProblemSolutionProps = {
+  label: string;
+  problem?: string;
+  solution?: string;
+  problemImage?: string;
+  solutionImage?: string;
+  problemVideo?: string;
+  solutionVideo?: string;
 };
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
@@ -38,7 +41,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
-  // 공통 폰 프레임 스타일
+  // 공통 폰 프레임
   const PHONE_SIZE = "w-[200px] h-[380px] md:w-[200px] md:h-[380px]";
   const PHONE_FRAME =
     "relative rounded-[28px] border border-neutral-200 bg-white overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.06)]";
@@ -187,6 +190,107 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     );
   }
 
+  function ProblemSolutionBlock({
+    label,
+    problem,
+    solution,
+    problemImage,
+    solutionImage,
+    problemVideo,
+    solutionVideo,
+  }: ProblemSolutionProps) {
+    return (
+      <div className="space-y-6 md:space-y-8">
+        <section className="mx-auto max-w-4xl rounded-2xl bg-white/80 p-6 shadow-sm ring-1 ring-neutral-200">
+          {/* 라벨 */}
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-amber-800">
+            {label}
+          </p>
+
+          <div className="flex flex-col md:flex-row items-stretch gap-6 md:items-center">
+            {/* PROBLEM */}
+            <div className="flex-1 space-y-3">
+              <h3 className="text-sm font-semibold text-neutral-900">
+                Problem
+              </h3>
+              <p className="text-sm leading-relaxed text-neutral-700 whitespace-pre-line">
+                {problem}
+              </p>
+
+              {(problemVideo || problemImage) && (
+                <div className="relative mt-3 h-44 md:h-56 w-full rounded-lg overflow-hidden shadow-sm border border-neutral-200">
+                  {problemVideo ? (
+                    <video
+                      src={problemVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={problemImage!}
+                      alt={label + " Problem"}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* 화살표 */}
+            <div className="flex justify-center items-center md:px-4">
+              <div className="hidden md:flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-sm">
+                →
+              </div>
+              <div className="flex md:hidden flex-col items-center justify-center gap-2">
+                <div className="h-6 w-px bg-neutral-200" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white shadow-sm">
+                  ↓
+                </div>
+                <div className="h-6 w-px bg-neutral-200" />
+              </div>
+            </div>
+
+            {/* SOLUTION */}
+            <div className="flex-1 space-y-3">
+              <h3 className="text-sm font-semibold text-neutral-900">
+                Solution
+              </h3>
+              <p className="text-sm leading-relaxed text-neutral-700 whitespace-pre-line">
+                {solution}
+              </p>
+
+              {(solutionVideo || solutionImage) && (
+                <div className="relative mt-3 h-44 md:h-56 w-full rounded-lg overflow-hidden shadow-sm border border-neutral-200">
+                  {solutionVideo ? (
+                    <video
+                      src={solutionVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={solutionImage!}
+                      alt={label + " Solution"}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   // ------------------------------------------------------------------
   // 렌더링 본문
   // ------------------------------------------------------------------
@@ -278,6 +382,21 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           {project.techSections.map((section: TechSection, idx) => {
             const imgCount = section.images?.filter(Boolean)?.length ?? 0;
 
+            if (section.layout === "problem-solution") {
+              return (
+                <ProblemSolutionBlock
+                  key={idx}
+                  label={section.title}
+                  problem={section.problem}
+                  solution={section.solution}
+                  problemImage={section.problemImage}
+                  solutionImage={section.solutionImage}
+                  problemVideo={section.problemVideo}
+                  solutionVideo={section.solutionVideo}
+                />
+              );
+            }
+
             // 1) multi-vertical
             if (section.layout === "multi-vertical") {
               if (section.video) {
@@ -308,7 +427,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 );
               }
 
-              // 1-2. 이미지 3장 스테이지
+              // 1-2. 이미지 3장
               if (imgCount > 1) {
                 return (
                   <div key={idx} className="space-y-6 md:space-y-10">

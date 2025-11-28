@@ -168,7 +168,7 @@ export default function SkillsSection({
           Skills
         </Reveal>
 
-        {/* 탭 바 (텍스트 컬러만 바뀌는 형태) */}
+        {/* 탭 바 */}
         <Reveal
           as="div"
           intensity="soft"
