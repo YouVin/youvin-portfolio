@@ -43,7 +43,7 @@ export const projects: Project[] = [
     period: "2025.06 - 2025.07",
     stack: ["Next.js", "React", "TypeScript", "Zustand", "Tailwind CSS"],
     summary:
-      "굿즈 커머스 + 커뮤니티 플랫폼. 장바구니, 주문/결제 흐름, 사용자 프로필(주민증)까지 직접 구현.",
+      "사용자 흐름 전체를 아우르는 이커머스 + 커뮤니티 플랫폼. Optimistic UI 장바구니 안정적 주문/결제, 주민증 기반 프로필까지 실제 서비스 아키텍처와 동일한 구조로 구축했습니다.",
     description: [
       "도토리섬은 귀여운 굿즈/소품을 판매하고, 또 섬 주민처럼 프로필을 꾸미는 컨셉의 커머스 + 커뮤니티 플랫폼입니다.",
       "장바구니 수량 변경에 Optimistic UI, 디바운싱, 전역 상태 동기화를 조합해 즉각적인 피드백을 주면서도 서버 상태와 어긋나지 않도록 했습니다.",
@@ -209,56 +209,35 @@ export const projects: Project[] = [
     ],
 
     github: "https://github.com/YouVin/greenie",
-    thumbnail: "/images/greeni.png",
+    thumbnail: "/images/greeni-logo.png",
 
-    heroImage: "/images/greeni-hero.png",
-
-    previewImages: [
-      {
-        src: "/images/greeni-feed.png",
-        caption: "게시글 피드 – 추천순/최신순 정렬과 카드형 리스트",
-      },
-      {
-        src: "/images/greeni-comments.png",
-        caption: "댓글/대댓글 구조 – 들여쓰기 기반 스레드 UI",
-      },
-    ],
+    heroImage: "/images/greeni-logo.png",
 
     techSections: [
       {
-        title: "추천순·최신순으로 정렬되는 커뮤니티 피드",
-        body:
-          "추천순에서는 좋아요 많은 글이 먼저 보이고,\n 최신순에서는 새 글이 바로 보이도록 설계했습니다.\n\n" +
-          "정렬 기준 변경 시 즉시 UI가 반응하도록 탭과 API 정렬 옵션을 함께 구성했습니다.",
-        layout: "single-horizontal",
-        images: ["/images/greeni-feed-sort.png"],
-      },
-
-      {
-        title: "카드형 게시글 목록 + 페이지네이션",
+        title: "카드형 게시글 목록",
         body:
           "모바일에서도 레이아웃이 자연스럽게 정렬되도록\n 반응형으로 구성했습니다.\n\n" +
           "페이지 이동 시 현재 페이지 상태를 유지하며\n 서버에서 필요한 부분만 가져오도록 했습니다.",
         layout: "single-horizontal",
-        images: ["/images/greeni-feed-pagination.png"],
+        images: ["/images/greeni-feed.png"],
       },
-
       {
-        title: "댓글·대댓글(스레드) 구조 직접 설계",
+        title: "게시글 상세 UI",
+        body:
+          "Vue + Quasar 기반으로 페이지를 구현했습니다.\n\n" +
+          "좋아요 버튼 토글 → PATCH 연동으로 즉시 반영했습니다.\n\n" +
+          "댓글 컴포넌트 분리하여 독립적인 CRUD 관리했습니다.",
+        layout: "single-horizontal",
+        images: ["/images/greeni-post-detail.png"],
+      },
+      {
+        title: "댓글·대댓글(스레드) 구조 및 언급 댓글",
         body:
           "댓글은 부모 댓글 → 그 아래 대댓글 형태로\n 직접 구조를 만들었습니다.\n\n" +
           "댓글은 parentId로 묶고, 같은 그룹의 댓글끼리는\n 시간 순으로 정렬했습니다.",
         layout: "single-horizontal",
-        images: ["/images/greeni-comment-thread.png"],
-      },
-
-      {
-        title: "좋아요·답글·시간 표시 등 사용자 경험 개선",
-        body:
-          "댓글 좋아요 상태를 빠르게 토글할 수 있도록\n Set 기반 구조로 처리했습니다.\n\n" +
-          "‘답글 쓰기’ 버튼을 누르면 해당 댓글 바로 아래\n 입력창이 열리도록 UX를 구성했습니다.",
-        layout: "single-horizontal",
-        images: ["/images/greeni-comment-interaction.png"],
+        images: ["/images/greeni-comment.png"],
       },
     ],
   },

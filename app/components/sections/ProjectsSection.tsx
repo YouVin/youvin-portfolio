@@ -163,7 +163,7 @@ export default function ProjectsSection() {
                         <h3 className="text-sm font-semibold text-foreground md:text-base">
                           {project.name}
                         </h3>
-                        <p className="mt-1 text-[11px] leading-relaxed text-muted md:text-[12px]">
+                        <p className="mt-2 text-[12px] md:text-sm leading-relaxed text-neutral-700 whitespace-pre-line">
                           {project.summary}
                         </p>
                       </div>
