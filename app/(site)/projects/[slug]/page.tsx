@@ -48,7 +48,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const PHONE_IMG = "object-contain bg-white p-3 md:p-4";
 
   // ------------------------------------------------------------------
-  // 3장 세로 배열 (multi-vertical)
+  // multi-vertical
   // ------------------------------------------------------------------
   function renderStage(images: string[], title: string) {
     return (
@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   // ------------------------------------------------------------------
-  // single-vertical : 폰 프레임 + 텍스트
+  // single-vertical
   // ------------------------------------------------------------------
   function renderVerticalSection(section: TechSection, idx: number) {
     const src = section.images?.[0];
@@ -123,7 +123,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   }
 
   // ------------------------------------------------------------------
-  // single-horizontal : 가로형 캡처/영상 + 텍스트
+  // single-horizontal
   // ------------------------------------------------------------------
   function renderHorizontalSection(section: TechSection, idx: number) {
     const src = section.video ?? section.images?.[0];
@@ -131,7 +131,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
     const isVideo = !!section.video;
     const isReverse = idx % 2 === 1;
-    const mediaJustify = isReverse ? "md:justify-start" : "md:justify-end";
 
     const media = isVideo ? (
       <video
@@ -147,26 +146,27 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         src={src}
         alt={section.title}
         fill
-        className="w-full h-full object-cover"
+        sizes="(max-width: 768px) 100vw, 640px"
+        className="object-cover"
       />
     );
 
     return (
       <div
-        className={`flex flex-col md:flex-row gap-12 ${
+        className={`flex flex-col md:flex-row gap-10 md:gap-12 ${
           isReverse ? "md:flex-row-reverse" : ""
         } items-center md:items-start`}
       >
-        {/* 이미지 / 영상 : 좌우 번갈아 배치 */}
-        <div className={`flex items-center md:w-1/2 ${mediaJustify}`}>
-          <div className="relative w-full max-w-3xl aspect-4/3 rounded-2xl overflow-hidden border border-neutral-200 bg-black shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+        {/* 이미지 / 영상 */}
+        <div className="flex w-full md:w-1/2 justify-center">
+          <div className="relative w-full max-w-3xl aspect-4/3 min-h-[220px] rounded-2xl overflow-hidden border border-neutral-200 bg-black shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
             {media}
           </div>
         </div>
 
         {/* 텍스트 */}
         <div
-          className={`md:w-[42%] md:max-w-[460px] space-y-3 md:space-y-4 ${
+          className={`w-full md:w-[42%] md:max-w-[460px] space-y-3 md:space-y-4 ${
             isReverse
               ? "text-center md:text-right md:ml-auto"
               : "text-center md:text-left"
@@ -175,14 +175,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <h3 className="text-lg md:text-xl font-semibold tracking-tight text-neutral-900">
             {section.title}
           </h3>
-          <p
-            className="
-            text-[13px] md:text-[15px]
-            text-neutral-600
-            leading-7 md:leading-8
-            whitespace-pre-line
-          "
-          >
+          <p className="text-[13px] md:text-[15px] text-neutral-600 leading-7 md:leading-8 whitespace-pre-line">
             {section.body}
           </p>
         </div>
@@ -297,80 +290,68 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   return (
     <section className="space-y-20 px-4 sm:px-6 lg:px-10">
       {/* HERO */}
-      {project.heroImage ? (
-        <section className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
-          <div className="relative w-full h-60 md:h-[300px]">
-            <Image
-              src={project.heroImage!}
-              alt={`${project.title} hero`}
-              fill
-              sizes="(max-width: 768px) 100vw, 1024px"
-              className="object-cover"
-              priority
-            />
+      <section className="relative isolate overflow-hidden rounded-3xl">
+        <div className="relative w-full h-80 sm:h-[340px] md:h-[360px]">
+          <Image
+            src={project.heroImage!}
+            alt={`${project.title} hero`}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+          />
 
-            <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/30 to-transparent" />
-            <div className="absolute left-4 top-4 md:left-6 md:top-6 max-w-[680px]">
-              <div className="backdrop-blur-md bg-white/20 border border-white/30 text-white rounded-2xl p-4 md:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] space-y-3">
-                <div className="flex items-baseline justify-between gap-3">
-                  <h1 className="text-lg md:text-2xl font-bold tracking-tight">
-                    {project.title}
-                  </h1>
-                  <span className="text-[11px] md:text-xs text-white/80">
-                    {project.period}
-                  </span>
-                </div>
+          {/* 그라데이션 오버레이 */}
+          <div className="absolute inset-0 bg-linear-to-r from-[#A97452]/75 via-[#B7CE63]/55 to-transparent mix-blend-multiply" />
 
-                <ul className="flex flex-wrap gap-2">
-                  {project.stack.map((tech) => (
-                    <li
-                      key={tech}
-                      className="text-[10px] md:text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/40 bg-white/10"
-                    >
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
+          {/* 중앙 카드 */}
+          <div className="absolute inset-0 flex items-end justify-center px-4 pb-6 md:px-8 md:pb-10">
+            <div className="w-[92%] md:w-full max-w-2xl md:max-w-3xl rounded-3xl border-none bg-white/40 backdrop-blur-xl shadow-[0_18px_50px_rgba(0,0,0,0.18)] px-5 py-6 md:px-6 md:py-7 text-neutral-900 space-y-3">
+              {/* META */}
+              <div className="flex items-center justify-between text-[11px] md:text-xs text-gray-700">
+                <span className="font-semibold uppercase tracking-widest">
+                  CASE STUDY
+                </span>
+                <span>{project.period}</span>
+              </div>
 
-                <p className="text-[12px] md:text-sm leading-relaxed line-clamp-2">
-                  {project.summary}
-                </p>
+              {/* TITLE */}
+              <h1 className="text-base sm:text-lg md:text-2xl font-bold tracking-tight text-center md:text-left">
+                {project.title}
+              </h1>
 
-                <div className="flex flex-wrap gap-2 text-[12px] md:text-sm font-medium">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-white text-neutral-900 px-3 py-1.5 hover:bg-neutral-100 transition"
+              {/* SUMMARY */}
+              <p className="mt-1 text-[11px] sm:text-[12px] md:text-sm leading-relaxed whitespace-pre-line text-center md:text-left">
+                {project.summary}
+              </p>
+
+              {/* STACK */}
+              <ul className="mt-2 flex flex-wrap justify-center md:justify-start gap-1.5">
+                {project.stack.map((tech) => (
+                  <li
+                    key={tech}
+                    className="px-2 py-0.5 text-[9px] sm:text-[10px] md:text-[11px] rounded-full bg-neutral-100 border border-neutral-200 text-neutral-700 whitespace-nowrap"
                   >
-                    GitHub Repo
-                  </a>
+                    {tech}
+                  </li>
+                ))}
+              </ul>
 
-                  {project.demo && (
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-white/90 text-neutral-900 px-3 py-1.5 hover:bg-white transition"
-                    >
-                      Live Demo
-                    </a>
-                  )}
-
-                  <Link
-                    href="/"
-                    className="inline-flex items-center gap-1 rounded-lg border border-white/40 bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition"
-                  >
-                    ← Back to Projects
-                  </Link>
-                </div>
+              {/* CTA */}
+              <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-2">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-neutral-900 text-white text-[10px] sm:text-[11px] md:text-xs px-3 py-1.5 sm:px-4 hover:bg-neutral-800 transition"
+                >
+                  GitHub Repo
+                </a>
               </div>
             </div>
           </div>
-        </section>
-      ) : (
-        <header className="space-y-4" />
-      )}
+        </div>
+      </section>
 
       {/* 기술 하이라이트 */}
       {project.techSections && project.techSections.length > 0 ? (
