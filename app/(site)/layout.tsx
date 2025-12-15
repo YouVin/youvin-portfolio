@@ -20,7 +20,7 @@ export default function RootLayout({
           <main className="min-h-screen bg-background">
             <div className="mx-auto max-w-5xl px-4">{children}</div>
           </main>
-          <footer className="mx-auto max-w-5xl px-4 py-12 text-xs bg-background text-neutral-400">
+          <footer className="mx-auto max-w-5xl px-4 py-12 text-xs bg-background text-neutral-600">
             © {new Date().getFullYear()} YouVin — Frontend Developer
           </footer>
         </ThemeWrapper>

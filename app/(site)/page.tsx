@@ -1,8 +1,8 @@
 // app/(site)/page.tsx
 import HeroSection from "@/app/components/sections/HeroSection";
 import SkillsSection from "@/app/components/sections/SkillsSection";
-import ProjectsSection from "../components/sections/ProjectsSection";
-import SiteHeader from "../components/SiteHeader";
+import ProjectsSection from "@/app//components/sections/ProjectsSection";
+import SiteHeader from "@/app//components/SiteHeader";
 
 export default function HomePage() {
   return (
