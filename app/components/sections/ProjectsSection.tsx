@@ -21,18 +21,16 @@ const PROJECTS: Project[] = [
     id: "dotori-island",
     name: "도토리섬 (Dotori Island)",
     summary:
-      "Next.js 15 · React 19 기반 이커머스 플랫폼. 장바구니 Optimistic UI, 전역 상태 모델링(Zustand), 주문/결제 흐름, Cloudinary 이미지 업로드 등 실제 서비스 수준의 구조를 구현한 프로젝트입니다.",
+      "Next.js 15 · React 19 기반 이커머스 플랫폼. \n사용자 흐름을 기준으로 장바구니와 주문 과정을 설계하고, Optimistic UI와 전역 상태 모델링(Zustand)을 적용해 인터랙션 응답성을 개선했습니다. 결제·주문 흐름과 Cloudinary 이미지 업로드까지 실제 서비스에 가까운 구조를 구현했습니다.",
     logoSrc: "/projects/dotori-logo.png",
     logoAlt: "도토리섬 로고",
     techs: [
-      "Next.js 15",
-      "React 19",
+      "Next.js",
+      "React",
       "TypeScript",
-      "Tailwind CSS",
       "Zustand",
-      "React Query",
-      "Cloudinary",
-      "SSR + CSR",
+      "Tailwind CSS",
+      "react-hook-form",
     ],
     githubUrl: "https://github.com/YouVin/Final-10-console.10g",
   },
@@ -41,10 +39,10 @@ const PROJECTS: Project[] = [
     id: "7zzang-arcade",
     name: "7짱 오락실",
     summary:
-      "바닐라 JS 기반 미니게임 컬렉션 프로젝트. Canvas 렌더링 루프, 키 입력 이벤트, 충돌 처리, 상태 업데이트 등 게임 로직을 직접 구축하며 재미있는 웹 아케이드 경험을 제공하는 프로젝트입니다.",
+      "바닐라 JavaScript 기반 미니게임 컬렉션. \nCanvas 렌더링 루프와 입력 이벤트, 충돌 처리 로직을 직접 구현하며 게임 상태 흐름을 설계했습니다. 단순 구현을 넘어, 화면 업데이트와 로직 분리를 고민하며 웹 기반 아케이드 경험을 완성했습니다.",
     logoSrc: "/projects/7-logo.png",
     logoAlt: "7짱 오락실 로고",
-    techs: ["JavaScript (ES6)", "HTML", "CSS", "Canvas API"],
+    techs: ["Vanilla JavaScript (ES6)", "Canvas API", "HTML5", "CSS3"],
     githubUrl: "https://github.com/YouVin/JS-07-7zzang-Arcade",
   },
 
@@ -52,10 +50,10 @@ const PROJECTS: Project[] = [
     id: "greenie",
     name: "그리니 (Greenie)",
     summary:
-      "친환경·비건 라이프스타일을 기록하고 큐레이션해주는 웹 서비스. Vue Router 기반 네비게이션 구성, SCSS UI 스타일링, API 데이터 처리 등 Vue 중심 개발 흐름을 익힌 프로젝트입니다.",
+      "친환경·비건 라이프스타일을 기록하고 큐레이션해주는 웹 서비스. \nVue Router 기반 네비게이션 구성, SCSS UI 스타일링, API 데이터 처리 등 Vue 중심 개발 흐름을 익힌 프로젝트입니다.",
     logoSrc: "/projects/greenie-logo.png",
     logoAlt: "Greenie 프로젝트 로고",
-    techs: ["Vue.js", "Vue Router", "SCSS", "REST API"],
+    techs: ["Vue 3", "Quasar Framework", "TypeScript", "REST API"],
     githubUrl: "https://github.com/YouVin/greenie",
   },
 
@@ -63,7 +61,7 @@ const PROJECTS: Project[] = [
     id: "today-keyword",
     name: "오늘의 키워드 (TodayKeyword)",
     summary:
-      "키워드 기반 캠퍼스 SNS 앱. Flutter UI 구성, 상태 관리, Firebase 인증/스토리지 연동 등 모바일 환경에서의 UX 흐름과 위젯 트리 설계를 경험한 프로젝트입니다.",
+      "오늘의 키워드는 키워드 기반 탐색과 커뮤니티 기능을 결합한 캠퍼스 SNS 앱입니다. \nFlutter UI 구성, 상태 관리, Firebase 인증/스토리지 연동 등 모바일 환경에서의 UX 흐름과 위젯 트리 설계를 경험한 프로젝트입니다.",
     logoSrc: "/projects/ok-logo.svg",
     logoAlt: "오늘의키워드 로고",
     techs: ["Flutter", "Dart", "Firebase", "REST API"],
@@ -111,7 +109,7 @@ export default function ProjectsSection() {
             Projects
           </h2>
           <p className="mt-3 max-w-xl text-xs text-muted md:text-sm">
-            실제 사용자 플로우를 고민하며 만든 프로젝트들입니다.
+            사용자 흐름을 기준으로 설계하고,
             <br className="hidden md:block" />
             설계 · 개발 · 디자인까지, 한 번에 다뤄본 경험들을 담고 있어요.
           </p>
@@ -198,7 +196,7 @@ export default function ProjectsSection() {
                             "noopener,noreferrer"
                           );
                         }}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 px-3 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 px-3 py-1.5 text-[11px] font-medium text-zinc-700 transition-colors hover:border-zinc-300 hover:bg-zinc-50 cursor-pointer"
                       >
                         <FiGithub className="h-4 w-4" />
                         <span>GitHub</span>

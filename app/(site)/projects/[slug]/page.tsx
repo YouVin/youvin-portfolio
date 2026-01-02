@@ -309,9 +309,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             <div className="w-[92%] md:w-full max-w-2xl md:max-w-3xl rounded-3xl border-none bg-white/40 backdrop-blur-xl shadow-[0_18px_50px_rgba(0,0,0,0.18)] px-5 py-6 md:px-6 md:py-7 text-neutral-900 space-y-3">
               {/* META */}
               <div className="flex items-center justify-between text-[11px] md:text-xs text-gray-700">
-                <span className="font-semibold uppercase tracking-widest">
-                  CASE STUDY
-                </span>
                 <span>{project.period}</span>
               </div>
 

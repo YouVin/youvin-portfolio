@@ -66,9 +66,9 @@ export default function HeroSection() {
           initialShow
           className="mt-8 text-sm md:text-base leading-relaxed text-muted"
         >
-          배경에 간단한 그라디언트를 더하고, 핵심 메시지를 명확하게.
+          변화하는 환경에서도 흐름을 먼저 이해하고,
           <br className="hidden md:block" />
-          사용자에게 제품의 가치를 가장 빠르게 전달합니다.
+          필요한 역할을 안정적으로 채워갑니다.
         </Reveal>
 
         <Reveal
@@ -78,12 +78,13 @@ export default function HeroSection() {
           initialShow
           className="mt-8 flex justify-center gap-2.5"
         >
-          <Link
-            href="/about"
+          <a
+            href="/resume/yubin_resume.pdf"
+            download
             className="rounded-full border border-foreground/30 px-3.5 py-1.5 text-sm md:text-base font-semibold text-foreground hover:bg-secondary/50 transition"
           >
             이력서 다운로드
-          </Link>
+          </a>
         </Reveal>
       </div>
     </Section>

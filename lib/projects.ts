@@ -41,7 +41,14 @@ export const projects: Project[] = [
     slug: "dotori-island",
     title: "도토리섬 (Dotori Island)",
     period: "2025.06 - 2025.07",
-    stack: ["Next.js", "React", "TypeScript", "Zustand", "Tailwind CSS"],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Zustand",
+      "Tailwind CSS",
+      "react-hook-form",
+    ],
     summary:
       "사용자 흐름 전체를 아우르는 이커머스 + 커뮤니티 플랫폼. Optimistic UI 장바구니 안정적 주문/결제, 주민증 기반 프로필까지 실제 서비스 아키텍처와 동일한 구조로 구축했습니다.",
     description: [
@@ -120,7 +127,7 @@ export const projects: Project[] = [
     slug: "7zzang-arcade",
     title: "7짱 오락실",
     period: "2025.05",
-    stack: ["TypeScript", "Canvas", "Firebase", "SAT.js", "HTML", "CSS"],
+    stack: ["Vanilla JavaScript (ES6)", "Canvas API", "HTML5", "CSS3"],
     summary:
       "순수 TS/Canvas로 만든 미니 게임 아케이드 컬렉션. 메인 오락기 화면과 개별 게임을 하나의 경험처럼 엮는 데 집중했습니다.",
     description: [
@@ -190,8 +197,8 @@ export const projects: Project[] = [
   {
     slug: "greenie",
     title: "그리니 (Greeni)",
-    period: "2025.03",
-    stack: ["Vue 3", "Quasar", "TypeScript"],
+    period: "2023.03",
+    stack: ["Vue 3", "Quasar Framework", "TypeScript", "REST API"],
     summary:
       "커뮤니티 기능 중심의 Vue 프로젝트. 게시글 피드 정렬, 페이지네이션, 댓글·대댓글 구조를 직접 설계하고 구현했습니다.",
 
@@ -245,17 +252,9 @@ export const projects: Project[] = [
     slug: "today-keyword",
     title: "TodayKeyword",
     period: "2022.07 - 2022.11",
-    stack: [
-      "Flutter",
-      "Dart",
-      "GetX",
-      "Firebase Auth",
-      "Kakao Login",
-      "Google Sign-In",
-      "SlidingUpPanel",
-    ],
+    stack: ["Flutter", "Dart", "Firebase", "REST API"],
     summary:
-      "위치 기반 로컬 추천 커뮤니티 앱. 주변 장소 리뷰, 사진, 키워드 태그, 지도 기반 추천까지 한 화면에서 볼 수 있는 모바일 MVP.",
+      "학교 근처 맛집 기반 로컬 추천 커뮤니티 앱. \n주변 장소 리뷰, 사진, 키워드 태그, 지도 기반 추천까지 한 화면에서 볼 수 있는 모바일 MVP.",
     github: "https://github.com/YouVin/TodayKeyword.FrontEnd",
     heroImage: "/images/todaykeyword-hero.jpg",
 
