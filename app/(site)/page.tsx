@@ -3,6 +3,8 @@ import HeroSection from "@/app/components/sections/HeroSection";
 import SkillsSection from "@/app/components/sections/SkillsSection";
 import ProjectsSection from "@/app//components/sections/ProjectsSection";
 import SiteHeader from "@/app//components/SiteHeader";
+import BlogSection from "../components/sections/BlogSection";
+import ContactSection from "../components/sections/ContactSection";
 
 export default function HomePage() {
   return (
@@ -16,6 +18,8 @@ export default function HomePage() {
       <div className="space-y-[14vh] md:space-y-[18vh] lg:space-y-[20vh]">
         <SkillsSection variant="teaser" />
         <ProjectsSection />
+        <BlogSection />
+        <ContactSection />
       </div>
     </main>
   );

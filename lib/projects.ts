@@ -40,7 +40,7 @@ export const projects: Project[] = [
   {
     slug: "dotori-island",
     title: "도토리섬 (Dotori Island)",
-    period: "2025.06 - 2025.07",
+    period: "2025.07 - 2025.08",
     stack: [
       "Next.js",
       "React",
