@@ -4,7 +4,6 @@ import SkillsSection from "@/app/components/sections/SkillsSection";
 import ProjectsSection from "@/app//components/sections/ProjectsSection";
 import SiteHeader from "@/app//components/SiteHeader";
 import BlogSection from "../components/sections/BlogSection";
-import ContactSection from "../components/sections/ContactSection";
 
 export default function HomePage() {
   return (
@@ -19,7 +18,6 @@ export default function HomePage() {
         <SkillsSection variant="teaser" />
         <ProjectsSection />
         <BlogSection />
-        <ContactSection />
       </div>
     </main>
   );

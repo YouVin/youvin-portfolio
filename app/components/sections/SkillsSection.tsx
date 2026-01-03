@@ -153,12 +153,12 @@ export default function SkillsSection({
   const visibleCategories =
     variant === "teaser" ? CATEGORIES.slice(0, 4) : CATEGORIES;
 
-  const [activeId, setActiveId] = useState<SkillCategoryId>("frontend");
+  const [activeId, setActiveId] = useState<SkillCategoryId | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   return (
     <Section id="skills">
-      <div className={`mx-auto w-full ${wrapper}  px-6 text-center`}>
+      <div className={`mx-auto w-full ${wrapper}  px-6 text-center mt-50`}>
         {/* 헤더 */}
         <Reveal
           as="h2"
@@ -175,15 +175,14 @@ export default function SkillsSection({
           className="mt-6 flex items-center justify-center gap-4 md:gap-6"
         >
           {CATEGORIES.map((cat) => {
-            const active = hasInteracted && cat.id === activeId;
+            const active = activeId === cat.id;
 
             return (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => {
-                  setActiveId(cat.id);
-                  setHasInteracted(true);
+                  setActiveId((prev) => (prev === cat.id ? null : cat.id));
                 }}
                 className={[
                   "text-sm md:text-base font-medium transition-colors cursor-pointer",
@@ -201,8 +200,8 @@ export default function SkillsSection({
         {/* 2×2 카드 */}
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {visibleCategories.map((cat, idx) => {
-            const activeForCard = hasInteracted ? cat.id === activeId : true;
-
+            const activeForCard =
+              activeId === null ? true : cat.id === activeId;
             return (
               <Reveal
                 key={cat.id}
