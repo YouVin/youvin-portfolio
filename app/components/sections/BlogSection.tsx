@@ -8,7 +8,7 @@ import { BLOG_CARDS } from "@/lib/blog";
 export default function BlogSection() {
   return (
     <Section id="blog">
-      <div className="mx-auto w-full max-w-6xl px-6 text-center mb-60">
+      <div className="mx-auto w-full max-w-6xl px-6 text-center ">
         <Reveal
           as="h2"
           intensity="bold"

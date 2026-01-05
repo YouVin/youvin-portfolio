@@ -35,6 +35,7 @@ export default function SiteHeader({
   const nav: NavItem[] = [
     { label: "Skills", sectionId: "skills", href: "/#skills" },
     { label: "Projects", sectionId: "projects", href: "/#projects" },
+    { label: "Blog", sectionId: "blog", href: "/#blog" },
   ];
 
   const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, item: NavItem) => {

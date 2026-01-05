@@ -154,7 +154,6 @@ export default function SkillsSection({
     variant === "teaser" ? CATEGORIES.slice(0, 4) : CATEGORIES;
 
   const [activeId, setActiveId] = useState<SkillCategoryId | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   return (
     <Section id="skills">

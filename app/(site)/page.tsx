@@ -4,6 +4,7 @@ import SkillsSection from "@/app/components/sections/SkillsSection";
 import ProjectsSection from "@/app//components/sections/ProjectsSection";
 import SiteHeader from "@/app//components/SiteHeader";
 import BlogSection from "../components/sections/BlogSection";
+import FloatingContactButton from "../components/sections/FloatingContactButton";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
         <SkillsSection variant="teaser" />
         <ProjectsSection />
         <BlogSection />
+        <FloatingContactButton />
       </div>
     </main>
   );
