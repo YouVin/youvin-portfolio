@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Section } from "@/app/components/Section";
 import Reveal from "@/app/components/Reveal";
 
