@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, MouseEvent } from "react";
+import { FiGithub, FiMenu, FiX } from "react-icons/fi";
 import Reveal from "@/app/components/Reveal";
 
 type Props = {
@@ -23,15 +24,13 @@ export default function SiteHeader({
   topClass = "top-6",
 }: Props) {
   const pathname = usePathname();
-
   const [stuck, setStuck] = useState(false);
   const [spacerH, setSpacerH] = useState(0);
   const [dockWidth, setDockWidth] = useState<number | null>(null);
-
+  const [mobileOpen, setMobileOpen] = useState(false);
   const sentryRef = useRef<HTMLDivElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
-
   const nav: NavItem[] = [
     { label: "Skills", sectionId: "skills", href: "/#skills" },
     { label: "Projects", sectionId: "projects", href: "/#projects" },
@@ -99,7 +98,7 @@ export default function SiteHeader({
       as="nav"
       intensity="soft"
       delay={0.06}
-      className="flex items-center justify-between px-4 py-3"
+      className="flex items-center justify-between px-4 h-12"
     >
       <Link
         href="/"
@@ -108,7 +107,7 @@ export default function SiteHeader({
         youvin.dev
       </Link>
 
-      <ul className="flex items-center gap-6 text-sm font-medium">
+      <ul className="items-center gap-6 text-sm font-medium hidden sm:flex">
         {nav.map((item) => (
           <li key={item.sectionId}>
             <Link
@@ -131,6 +130,61 @@ export default function SiteHeader({
           </a>
         </li>
       </ul>
+
+      {/* 모바일 햄버거 버튼 */}
+      <div className="flex sm:hidden text-sm font-medium items-center gap-2">
+        <a
+          href="https://github.com/YouVin"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub 프로필로 이동"
+          className="rounded-full bg-white/95 shadow-md shadow-black/10 p-1.5
+             hover:bg-zinc-50 transition-colors"
+        >
+          <FiGithub className="text-lg" />
+        </a>
+
+        <button
+          type="button"
+          aria-label="섹션 메뉴 열기"
+          onClick={() => setMobileOpen((v) => !v)}
+          className="rounded-full bg-white/95 shadow-md shadow-black/10 p-1.75
+             hover:bg-zinc-50 transition-colors"
+        >
+          {mobileOpen ? (
+            <FiX className="text-md" />
+          ) : (
+            <FiMenu className="text-md" />
+          )}
+        </button>
+
+        {/* 모바일 드롭다운 메뉴 */}
+        {mobileOpen && (
+          <div
+            className="absolute inset-x-0 top-14 mx-0 w-full
+             rounded-2xl border border-zinc-200
+             bg-white/20 shadow-xl shadow-black/15 backdrop-blur-lg"
+          >
+            <ul className="flex flex-col gap-0.5 py-2 text-sm font-medium">
+              {nav.map((item) => (
+                <li key={item.sectionId}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => {
+                      handleNavClick(e, item);
+                      setMobileOpen(false);
+                    }}
+                    className="block px-4 py-2 text-muted hover:text-primary
+                       hover:bg-zinc-50 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </Reveal>
   );
 
