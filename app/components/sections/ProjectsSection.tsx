@@ -99,7 +99,7 @@ export default function ProjectsSection() {
                         <h3 className="text-sm font-semibold text-foreground md:text-base">
                           {project.name}
                         </h3>
-                        <p className="mt-2 text-[12px] md:text-sm leading-relaxed text-neutral-700 whitespace-pre-line">
+                        <p className="mt-2 text-[12px] md:text-sm leading-relaxed text-neutral-700 whitespace-pre-line line-clamp-3 md:line-clamp-none">
                           {project.summary}
                         </p>
                       </div>
